@@ -1,0 +1,52 @@
+# Python / Backend
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Alembic
+backend/migrations/versions/*.py
+!backend/migrations/versions/001_initial.py
+
+# Flutter / Dart
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.pub-cache/
+frontend/build/
+frontend/*.g.dart
+frontend/.packages
+frontend/pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Docker
+*.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
