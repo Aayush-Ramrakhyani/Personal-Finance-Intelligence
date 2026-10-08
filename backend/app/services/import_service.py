@@ -408,6 +408,8 @@ class ImportService:
 
     def _parse_date(self, value: str, fmt: Optional[str] = None) -> date:
         value = str(value).strip()
+        if not value:
+            raise ValueError("Empty date string")
         if fmt:
             try:
                 return datetime.strptime(value, fmt).date()

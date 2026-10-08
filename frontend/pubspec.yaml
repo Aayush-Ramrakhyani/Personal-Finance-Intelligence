@@ -40,14 +40,43 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.6
 
+dependency_overrides:
+  # file_picker 8.x uses compileSdk 34; flutter_plugin_android_lifecycle 2.0.35
+  # bumped its minCompileSdk to 36 which breaks the check. Pin to 2.0.20 (compileSdk 34).
+  flutter_plugin_android_lifecycle: 2.0.20
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
   riverpod_generator: ^2.4.0
   build_runner: ^2.4.9
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.6
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#151929"
+  adaptive_icon_foreground: "assets/images/icon_foreground.png"
+  web:
+    generate: false
+
+flutter_native_splash:
+  color: "#151929"
+  color_dark: "#151929"
+  image: "assets/images/splash_logo.png"
+  image_dark: "assets/images/splash_logo.png"
+  android: true
+  ios: false
+  android_12:
+    color: "#151929"
+    image: "assets/images/splash_logo.png"
+    icon_background_color: "#151929"
