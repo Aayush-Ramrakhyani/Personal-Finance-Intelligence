@@ -353,4 +353,4 @@ personal-finance-intelligence/
 
 ## License
 
-MIT License.
+This is a personal project by **Aayush Ramrakhyani**. All rights reserved.
