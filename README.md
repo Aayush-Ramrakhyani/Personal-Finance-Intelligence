@@ -1,270 +1,246 @@
-# Personal Finance Intelligence
+<div align="center">
 
-[![CI](https://github.com/Aayush-Ramrakhyani/Personal-Finance-Intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/Aayush-Ramrakhyani/Personal-Finance-Intelligence/actions/workflows/ci.yml)
+# 💰 Personal Finance Intelligence
 
-An AI-powered personal finance platform with a **Flutter mobile app**, a **Next.js web dashboard**, and a **FastAPI/PostgreSQL backend**. Import bank statements, auto-categorise expenses with rule-based + AI classification, track budgets, and get conversational financial insights — built with a clean, layered architecture and a full async backend.
+### *Your money. Understood. Automatically.*
 
----
+**AI-powered personal finance platform — import bank statements, auto-categorise every rupee,  
+track budgets, and get conversational insights from your own financial data.**
 
-## Table of Contents
+<br/>
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Tech Decisions](#tech-decisions)
-- [Getting Started](#getting-started)
-  - [Backend (Docker)](#backend-docker)
-  - [Web Dashboard](#web-dashboard)
-  - [Flutter App](#flutter-app)
-- [Running Tests](#running-tests)
-- [Environment Variables](#environment-variables)
-- [API Reference](#api-reference)
-- [Project Structure](#project-structure)
-- [Screenshots](#screenshots)
-- [License](#license)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![Redis](https://img.shields.io/badge/Redis_7-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 
----
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Python](https://img.shields.io/badge/Python_3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white)](https://framer.com/motion)
+[![OpenAI](https://img.shields.io/badge/OpenAI_GPT--4o-412991?style=flat-square&logo=openai&logoColor=white)](https://openai.com)
+[![Celery](https://img.shields.io/badge/Celery-37814A?style=flat-square&logo=celery&logoColor=white)](https://docs.celeryq.dev)
 
-## Overview
+<br/>
 
-Most people manage finances across multiple bank accounts, apps, and cards — with no single view of where money is actually going. Personal Finance Intelligence solves this by letting users import bank statements as CSV, automatically categorising every transaction, tracking budgets per category, and surfacing insights through a conversational AI assistant.
+[**Live Demo**](http://localhost:3000) · [**API Docs**](http://localhost:8000/docs) · [**Report Bug**](https://github.com/Aayush-Ramrakhyani/Personal-Finance-Intelligence/issues) · [**Request Feature**](https://github.com/Aayush-Ramrakhyani/Personal-Finance-Intelligence/issues)
 
-The platform ships as three independent clients sharing a single backend:
-
-| Client | Platform | Status |
-|--------|----------|--------|
-| **Flutter app** | iOS + Android | In development (Play Store target) |
-| **Next.js web dashboard** | Browser | Complete — 15 pages, full API integration |
-| **FastAPI backend** | Docker | Complete — async, tested, documented |
-
-**Key engineering highlights:**
-
-- Hash-based duplicate detection prevents double-importing transactions across re-uploaded statements
-- Rule-based categorisation covers known merchants instantly; AI fallback (GPT-4/Gemini) handles edge cases — with the decision cached so the same merchant is never re-classified
-- CSV parsing is bank-agnostic: the parser detects column layout automatically across inconsistent formats from different Indian banks
-- Full async stack (FastAPI + asyncpg + SQLAlchemy async) — no thread-blocking under concurrent requests
-- Web dashboard features spring-physics animations throughout (Framer Motion), count-up number transitions, animated charts, and a shared-layout navigation indicator
+</div>
 
 ---
 
-## Features
+## ✨ What makes this different
 
-### Bank Statement Import
-- CSV import with automatic column-layout detection across major bank formats
-- **Hash-based duplicate detection** — transactions already in the database are skipped silently
-- 4-step guided import flow (upload → detect columns → preview → confirm)
-- Manual override for any staged transaction before confirming the import
+> Most finance apps make you enter transactions manually. This one reads your bank statement CSV, figures out what every charge is, and shows you where your money went — automatically.
 
-### Expense Categorisation
-- Rule-based categorisation across 30+ spending categories
-- AI-assisted fallback (GPT-4 / Gemini) for unrecognised merchants — result cached per merchant
-- Manual override + category correction
-- Merchant normalisation — "SWIGGY ORDER 123456" → "Swiggy"
-
-### Budget Tracking
-- Set monthly budgets per category
-- Real-time progress bars — spend vs. budget with circular progress rings
-- Overspend push notifications via Firebase Cloud Messaging
-- Configurable carry-forward logic
-
-### Analytics Dashboard
-- Monthly spend breakdown by category, merchant, and time range (3/6/12 months)
-- Month-over-month trend charts (income vs. expenses, net cash flow line)
-- Savings rate calculation and trend
-- Anomaly detection — flags categories with unusually high spend vs. historical average
-
-### AI Assistant
-- Conversational interface powered by GPT-4 / Gemini
-- Query in plain language: *"How much did I spend on subscriptions last month?"*
-- Proactive weekly insights pushed as notifications
-- Context-aware: the assistant has access to the user's actual transaction history
-- Typing indicator with animated 3-dot bounce (web)
-
-### Web Dashboard (new)
-- 15-page Next.js app: landing, auth, dashboard, transactions, CSV import, budgets, analytics, AI chat, notifications, settings, 404
-- Premium dark theme with INR formatting (₹, lakh compact notation)
-- Framer Motion spring physics throughout — page transitions, staggered card entrances, count-up numbers, animated charts, progress rings
-- JWT authentication with automatic token refresh on 401
-- Fully wired to the real FastAPI backend — no mock data
+| | Personal Finance Intelligence |
+|---|---|
+| 🏦 **Import** | Upload any Indian bank's CSV — columns auto-detected |
+| 🤖 **Categorise** | Rule-based for known merchants, GPT-4 fallback for the rest |
+| 🔁 **Deduplicate** | Hash-based — re-upload the same file, nothing doubles |
+| 📊 **Analyse** | Trends, breakdowns, anomaly detection, savings rate |
+| 💬 **Ask questions** | *"How much did I spend on Swiggy last month?"* |
+| 📱 **Any device** | Flutter mobile app + Next.js web dashboard |
 
 ---
 
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Web Dashboard** | Next.js 16 (App Router), TypeScript strict, Tailwind CSS v4, Framer Motion, Recharts |
-| **Mobile App** | Flutter (iOS + Android), Riverpod, GoRouter, Clean Architecture |
-| **Backend API** | Python 3.11+, FastAPI (async), Pydantic v2 |
-| **Database** | PostgreSQL 16 + SQLAlchemy async + Alembic |
-| **Caching** | Redis 7 |
-| **Background Jobs** | Celery (Redis broker) |
-| **AI** | OpenAI GPT-4o-mini / Google Gemini 1.5 (pluggable) |
-| **Push Notifications** | Firebase Cloud Messaging |
-| **Infrastructure** | Docker, docker-compose, GitHub Actions |
-
----
-
-## Architecture
+## 🖥️ Three clients, one backend
 
 ```
-┌──────────────────────┐   ┌─────────────────────────────┐
-│   Flutter Mobile App │   │     Next.js Web Dashboard    │
-│  iOS + Android       │   │  15 pages · dark theme       │
-│  Riverpod · GoRouter │   │  Framer Motion · Recharts    │
-└──────────┬───────────┘   └──────────────┬──────────────┘
+┌─────────────────────┐      ┌──────────────────────────┐
+│   Flutter Mobile    │      │    Next.js Web Dashboard  │
+│   iOS + Android     │      │    15 pages · dark theme  │
+│   Riverpod · Clean  │      │    Spring animations      │
+└──────────┬──────────┘      └────────────┬─────────────┘
            │                              │
-           └────────────┬─────────────────┘
-                        │ REST API  (JWT Bearer)
-           ┌────────────▼──────────────────────┐
-           │       FastAPI Backend (async)      │
-           │  Auth · Import · Categorise        │
-           │  Budget · AI · Analytics           │
-           │       Service layer pattern        │
-           └──────┬────────────┬───────────────┘
-                  │            │
-      ┌───────────▼──┐  ┌──────▼──────┐  ┌─────────────────┐
-      │  PostgreSQL  │  │   Redis 7   │  │  OpenAI/Gemini   │
-      │  (main store)│  │  Cache +    │  │  AI chat +       │
-      │  Alembic     │  │  Broker     │  │  categorisation  │
-      └──────────────┘  └──────┬──────┘  └─────────────────┘
+           └──────────────┬───────────────┘
+                          │  JWT Bearer / REST
+              ┌───────────▼──────────────┐
+              │    FastAPI  (async)       │
+              │  Auth · Import · AI       │
+              │  Budget · Analytics       │
+              └───┬───────────┬──────────┘
+                  │           │
+         ┌────────▼──┐  ┌─────▼──────┐  ┌──────────────┐
+         │ PostgreSQL │  │   Redis    │  │ OpenAI/Gemini │
+         │  Alembic   │  │ Cache+Jobs │  │  AI provider  │
+         └────────────┘  └─────┬──────┘  └──────────────┘
                                │
                       ┌────────▼────────┐
                       │  Celery Workers  │
-                      │  CSV processing  │
-                      │  AI batch jobs   │
+                      │  CSV · AI batch  │
                       └─────────────────┘
 ```
 
 ---
 
-## Tech Decisions
+## 🚀 Quick Start
 
-**Next.js App Router for the web client**
-The App Router's route groups allow clean separation between the auth shell (`(auth)`) and the app shell `(app)` — different layouts, redirects, and loading states per group. Server Components handle metadata; all interactive pages are client components with real-time data fetching.
-
-**Tailwind CSS v4 (CSS-first config)**
-v4 uses `@theme {}` directives in CSS instead of `tailwind.config.js`. All design tokens are CSS custom properties (`var(--color-accent)` etc.) — this makes Recharts chart styling trivial since chart props accept `var(...)` strings directly.
-
-**Framer Motion for animation**
-Spring physics (`stiffness`, `damping`, `mass`) produce natural-feeling motion vs. hand-coded CSS transitions. `layoutId` shared-layout makes the sidebar active indicator slide between nav items without any position calculation. `AnimatePresence` handles mount/unmount — critical for dialogs, page transitions, and the CSV import step transitions.
-
-**FastAPI over Django**
-FastAPI's native async support is the right fit for an I/O-heavy backend (database, Redis, AI API calls). Pydantic provides request validation automatically. Django's ORM and admin panel are not needed for an API-only backend.
-
-**Celery for CSV processing**
-Parsing and categorising a full bank statement (1,000+ transactions, AI calls per unknown merchant) can take 20–30 seconds. Celery workers run out-of-process, scale independently, and retry on failure.
-
-**Redis for caching and broker**
-Analytical aggregations (monthly summaries, trend charts) are expensive to recompute on every dashboard open. Redis caches these per-user with a short TTL, and also serves as the Celery broker — one service, two roles.
-
-**PostgreSQL over NoSQL**
-Financial data is inherently relational. SQL aggregations (GROUP BY category, month-over-month comparisons, savings rate) are clean and performant with proper indexing. The schema is stable and well-defined.
-
-**Riverpod (AsyncNotifier) in Flutter**
-Every data operation is async (API calls). AsyncNotifier handles loading/error/data states cleanly and is testable by overriding providers in tests.
-
-**AI with rule-based fallback**
-Calling GPT-4 for every transaction is slow and expensive. The categoriser runs rule-based matching first (instant, free); only unrecognised merchants hit the AI. The AI decision is then cached per merchant name.
-
----
-
-## Getting Started
-
-### Backend (Docker)
-
-**Prerequisites:** Docker Desktop only. No local Python, PostgreSQL, or Redis needed.
+> One command gets the entire backend running.
 
 ```bash
+# 1. Clone
 git clone https://github.com/Aayush-Ramrakhyani/Personal-Finance-Intelligence.git
 cd Personal-Finance-Intelligence
 
-# Copy the env template
+# 2. Configure (30 seconds)
 cp .env.example .env
+# Open .env and set JWT_SECRET + JWT_REFRESH_SECRET
+# Generate them with: python -c "import secrets; print(secrets.token_urlsafe(32))"
 
-# Edit .env — set at minimum:
-#   JWT_SECRET=<random 32+ char string>
-#   JWT_REFRESH_SECRET=<random 32+ char string>
-#   OPENAI_API_KEY=<your key>   (leave blank to disable AI chat)
-# Generate secrets with: python -c "import secrets; print(secrets.token_urlsafe(32))"
-
-# Start the full stack: API + PostgreSQL + Redis + Celery worker
+# 3. Launch everything
 docker compose up -d
-
-# Apply database migrations (first time only)
 docker compose exec backend alembic upgrade head
-
-# Optional: seed demo data
-docker compose exec backend python seed.py
 ```
+
+**That's it.** PostgreSQL + Redis + FastAPI + Celery worker — all running.
 
 | Service | URL |
 |---------|-----|
-| Backend API | http://localhost:8000 |
-| Swagger UI (interactive docs) | http://localhost:8000/docs |
+| 🌐 Web Dashboard | http://localhost:3000 |
+| ⚡ API | http://localhost:8000 |
+| 📖 Swagger UI | http://localhost:8000/docs |
 
 ---
 
-### Web Dashboard
+## 🌐 Web Dashboard
 
-Requires Node.js 18+. The backend must be running first.
+> 15 animated pages. Premium dark theme. Spring physics throughout.
 
 ```bash
 cd web
-
-# Install dependencies
 npm install
-
-# Create local env file
-cp .env.local.example .env.local
-# .env.local already points to http://localhost:8000/api/v1 — no changes needed for local dev
-
-# Start dev server
+cp .env.local.example .env.local   # already points to localhost:8000
 npm run dev
 ```
 
-Open **http://localhost:3000** — register an account, then explore the full dashboard.
+Open **http://localhost:3000**, register an account, and start exploring.
 
-```bash
-# Production build (optional — verifies TypeScript + all 15 routes)
-npm run build
-```
+<details>
+<summary><b>📋 All 15 pages</b></summary>
 
-**Pages:**
+<br/>
 
-| Route | Page |
-|-------|------|
-| `/` | Landing page |
-| `/login` | Sign in |
-| `/register` | Create account |
-| `/dashboard` | Overview — income, expenses, savings, charts |
-| `/transactions` | Paginated transaction list with filters |
-| `/transactions/[id]` | Transaction detail + edit/delete |
-| `/import` | 4-step CSV import flow |
-| `/budgets` | Budget management with progress rings |
-| `/analytics` | Charts, trends, anomaly detection |
-| `/ai` | AI assistant chat |
-| `/notifications` | Notification centre |
-| `/settings` | Profile + security |
+| Route | Page | Highlights |
+|-------|------|-----------|
+| `/` | Landing | Animated hero, feature grid, tech stack |
+| `/login` | Sign in | Staggered form, error pill animations |
+| `/register` | Create account | Client-side validation, smooth transitions |
+| `/dashboard` | Overview | Count-up numbers, area chart, budget rings |
+| `/transactions` | Transaction list | Debounced search, animated filter panel |
+| `/transactions/[id]` | Detail view | Edit dialog, delete confirm |
+| `/import` | CSV Import | 4-step stepper with directional slide transitions |
+| `/budgets` | Budgets | Circular progress rings, CRUD dialogs |
+| `/analytics` | Analytics | Bar, line, pie charts — 3/6/12 month range |
+| `/ai` | AI Assistant | Typing indicator, conversation history |
+| `/notifications` | Notifications | Stagger list, mark-read on click |
+| `/settings` | Settings | Profile form, security info |
+| `*` | 404 | Animated not-found page |
+
+</details>
+
+<details>
+<summary><b>🎨 Animation system</b></summary>
+
+<br/>
+
+Every interaction has a physical feel:
+
+- **Page transitions** — fade + 12px vertical slide, `cubic-bezier(0, 0, 0.2, 1)`
+- **Cards** — spring lift on hover (`y: -2`, stiffness 500)
+- **Navigation** — `layoutId` shared indicator slides between active items
+- **Numbers** — count-up via `requestAnimationFrame` with `easeOutQuart`, triggered by `useInView`
+- **Charts** — Recharts built-in `animationDuration` on all series
+- **Progress rings** — SVG `strokeDashoffset` animated with spring physics
+- **Import stepper** — directional `x` slide per step, `mode="wait"` for clean transitions
+- **AI typing** — 3 dots with staggered `y`-bounce
+- **Reduced motion** — single CSS media query disables all animations globally
+
+</details>
 
 ---
 
-### Flutter App
-
-Requires Flutter 3.19+.
+## 📱 Flutter App
 
 ```bash
 cd frontend
 flutter pub get
-flutter run
+flutter run          # connects to the same backend at localhost:8000
 ```
+
+Built with Riverpod (AsyncNotifier), GoRouter, and Clean Architecture feature modules.
 
 ---
 
-## Running Tests
+## ⚙️ Features Deep Dive
 
-Tests use an in-memory SQLite database — no external services required.
+<details>
+<summary><b>🏦 Bank Statement Import</b></summary>
+
+<br/>
+
+1. **Upload** — drag-and-drop any CSV from HDFC, SBI, ICICI, Axis, Kotak, etc.
+2. **Detect** — the parser inspects the file and identifies date, amount, description columns automatically
+3. **Preview** — review all staged transactions; uncheck any you want to skip
+4. **Confirm** — transactions are saved; duplicates (same hash) are silently skipped
+
+Hash-based deduplication means you can safely re-upload last month's statement when you also have this month's — only new rows are inserted.
+
+</details>
+
+<details>
+<summary><b>🤖 AI Categorisation</b></summary>
+
+<br/>
+
+The categorisation pipeline runs in two stages:
+
+1. **Rule-based** (instant, free) — covers 300+ known Indian merchants: Swiggy, Zomato, Amazon, IRCTC, Paytm, BigBasket, DMart, etc.
+2. **AI fallback** (GPT-4o-mini / Gemini) — only for merchants not matched by rules
+
+The AI result is cached in the database per merchant name. "SWIGGY ORDER 982341" hits the cache after the first transaction — every subsequent Swiggy order is categorised instantly, for free.
+
+**Merchant normalisation:** "SWIGGY ORDER 982341" → "Swiggy" · "AMZN MKTPLACE\*PQ82" → "Amazon"
+
+</details>
+
+<details>
+<summary><b>📊 Analytics</b></summary>
+
+<br/>
+
+- Monthly income vs. expenses bar chart
+- Net cash flow trend line (3, 6, or 12 month range)
+- Category breakdown donut chart with legend
+- Month-over-month % change for each category
+- Savings rate calculation and trend
+- **Anomaly detection** — flags categories where current spend is statistically above your historical average, with severity levels (moderate / significant)
+
+</details>
+
+<details>
+<summary><b>💬 AI Assistant</b></summary>
+
+<br/>
+
+Ask anything about your finances in plain language:
+
+> *"How much did I spend on food delivery last month?"*  
+> *"Am I on track with my grocery budget?"*  
+> *"What's my biggest expense category this quarter?"*  
+> *"Compare my spending this month vs last month"*
+
+The assistant has read access to your full transaction history. Conversations are persisted — pick up where you left off. Weekly proactive insights are generated automatically and pushed as notifications.
+
+Supports both **OpenAI GPT-4o-mini** and **Google Gemini 1.5** — switch with one env variable.
+
+</details>
+
+---
+
+## 🧪 Tests
 
 ```bash
 cd backend
@@ -272,185 +248,190 @@ pip install -r requirements.txt
 pytest tests/ -v
 ```
 
-Current status: **18 tests passing** across auth flows, transaction CRUD, balance integrity, user isolation, and analytics calculations.
+**18 tests passing** — auth flows, transaction CRUD, balance integrity, user isolation, analytics calculations. Uses in-memory SQLite — no Docker needed to run tests.
 
 ---
 
-## Environment Variables
-
-Copy `.env.example` to `.env` and fill in your values:
+## 🔑 Environment Variables
 
 ```env
-# JWT — generate with: python -c "import secrets; print(secrets.token_urlsafe(32))"
-JWT_SECRET=CHANGE_ME
-JWT_REFRESH_SECRET=CHANGE_ME
+# .env (copy from .env.example)
 
-# AI provider: "openai" or "gemini"
-AI_PROVIDER=openai
-OPENAI_API_KEY=sk-...      # leave blank to disable AI features
-GEMINI_API_KEY=...         # alternative to OpenAI
+# Required — generate with: python -c "import secrets; print(secrets.token_urlsafe(32))"
+JWT_SECRET=your-secret-here
+JWT_REFRESH_SECRET=your-other-secret-here
 
-# Firebase (for push notifications — optional for local dev)
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CREDENTIALS_PATH=./firebase-credentials.json
+# AI (leave blank to disable AI features — everything else still works)
+AI_PROVIDER=openai              # or "gemini"
+OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=...
+
+# Pre-configured in docker-compose.yml — no need to change for local dev
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/finance_db
+REDIS_URL=redis://localhost:6379/0
 ```
 
-Database, Redis, and Celery URLs are pre-configured for docker-compose in `docker-compose.yml` — they use internal service names and do not need to be changed. See `.env.example` for the full list with documentation for every variable.
+Full reference with every variable documented: [`.env.example`](.env.example)
 
 ---
 
-## API Reference
+## 📡 API Reference
 
-### Auth
+<details>
+<summary><b>View all endpoints</b></summary>
+
+<br/>
+
+**Auth**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/auth/register` | Register new user |
-| POST | `/api/v1/auth/login` | Login, get JWT tokens |
-| POST | `/api/v1/auth/refresh` | Refresh access token |
-| GET | `/api/v1/auth/me` | Get current user |
+| `POST` | `/api/v1/auth/register` | Register new user |
+| `POST` | `/api/v1/auth/login` | Login → JWT tokens |
+| `POST` | `/api/v1/auth/refresh` | Refresh access token |
+| `GET` | `/api/v1/auth/me` | Current user profile |
 
-### Transactions
+**Transactions**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/transactions` | List (paginated, filterable) |
-| POST | `/api/v1/transactions` | Create transaction |
-| GET | `/api/v1/transactions/:id` | Get transaction detail |
-| PATCH | `/api/v1/transactions/:id` | Update transaction |
-| DELETE | `/api/v1/transactions/:id` | Delete transaction |
+| `GET` | `/api/v1/transactions` | List (paginated, filterable) |
+| `POST` | `/api/v1/transactions` | Create transaction |
+| `GET` | `/api/v1/transactions/:id` | Get single transaction |
+| `PATCH` | `/api/v1/transactions/:id` | Update transaction |
+| `DELETE` | `/api/v1/transactions/:id` | Delete transaction |
 
-### Import
+**CSV Import**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/imports/upload` | Upload CSV |
-| GET | `/api/v1/imports/:job_id` | Get import job status |
-| POST | `/api/v1/imports/:job_id/detect-columns` | Detect column layout |
-| POST | `/api/v1/imports/:job_id/preview` | Preview staged transactions |
-| POST | `/api/v1/imports/:job_id/confirm` | Confirm import |
+| `POST` | `/api/v1/imports/upload` | Upload CSV file |
+| `GET` | `/api/v1/imports/:id` | Get job status |
+| `POST` | `/api/v1/imports/:id/detect-columns` | Auto-detect columns |
+| `POST` | `/api/v1/imports/:id/preview` | Preview with mapping |
+| `POST` | `/api/v1/imports/:id/confirm` | Confirm and import |
 
-### Analytics
+**Analytics**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/analytics/overview` | Monthly income/expense/savings |
-| GET | `/api/v1/analytics/categories` | Spend by category |
-| GET | `/api/v1/analytics/cash-flow` | Monthly cash flow |
-| GET | `/api/v1/analytics/trends` | Month-over-month trends |
-| GET | `/api/v1/analytics/anomalies` | Spending anomalies |
+| `GET` | `/api/v1/analytics/overview` | Income / expense / savings |
+| `GET` | `/api/v1/analytics/categories` | Spend by category |
+| `GET` | `/api/v1/analytics/cash-flow` | Monthly cash flow |
+| `GET` | `/api/v1/analytics/trends` | Month-over-month trends |
+| `GET` | `/api/v1/analytics/anomalies` | Anomaly detection |
 
-### Budgets
+**Budgets**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/budgets` | List all budgets |
-| POST | `/api/v1/budgets` | Create budget |
-| PUT | `/api/v1/budgets/:id` | Update budget |
-| DELETE | `/api/v1/budgets/:id` | Delete budget |
+| `GET` | `/api/v1/budgets` | List budgets |
+| `POST` | `/api/v1/budgets` | Create budget |
+| `PUT` | `/api/v1/budgets/:id` | Update budget |
+| `DELETE` | `/api/v1/budgets/:id` | Delete budget |
 
-### AI Assistant
+**AI Assistant**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/ai/conversations` | List conversations |
-| POST | `/api/v1/ai/conversations` | Create conversation |
-| GET | `/api/v1/ai/conversations/:id` | Get conversation |
-| POST | `/api/v1/ai/conversations/:id/messages` | Send message |
-| GET | `/api/v1/ai/insights` | Get AI insights |
-| POST | `/api/v1/ai/insights/generate` | Generate new insights |
+| `GET` | `/api/v1/ai/conversations` | List conversations |
+| `POST` | `/api/v1/ai/conversations` | New conversation |
+| `POST` | `/api/v1/ai/conversations/:id/messages` | Send message |
+| `GET` | `/api/v1/ai/insights` | Proactive insights |
 
-### Notifications
+**Notifications**
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/notifications` | List notifications |
-| GET | `/api/v1/notifications/unread-count` | Unread count |
-| POST | `/api/v1/notifications/:id/read` | Mark as read |
-| POST | `/api/v1/notifications/mark-all-read` | Mark all read |
+| `GET` | `/api/v1/notifications` | List notifications |
+| `GET` | `/api/v1/notifications/unread-count` | Unread count |
+| `POST` | `/api/v1/notifications/:id/read` | Mark as read |
+| `POST` | `/api/v1/notifications/mark-all-read` | Mark all read |
 
-Full interactive documentation available at **http://localhost:8000/docs** when the stack is running.
+Interactive docs (try any endpoint live): **http://localhost:8000/docs**
+
+</details>
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 personal-finance-intelligence/
 │
-├── backend/                        # FastAPI async API
+├── 🐍 backend/                    FastAPI async API
 │   ├── app/
-│   │   ├── api/v1/                 # Route handlers (thin — delegate to services)
-│   │   ├── services/               # Business logic
-│   │   │   ├── import_service.py   # CSV parsing, dedup, staging
-│   │   │   ├── analytics_service.py
-│   │   │   ├── budget_service.py
-│   │   │   └── auth_service.py
-│   │   ├── ai/                     # AI provider abstraction
-│   │   │   ├── base.py             # Abstract provider interface
-│   │   │   ├── openai_provider.py
-│   │   │   ├── gemini_provider.py
-│   │   │   ├── factory.py          # Selects provider from env config
-│   │   │   ├── categorization_service.py
-│   │   │   └── financial_assistant.py
-│   │   ├── models/                 # SQLAlchemy ORM models
-│   │   ├── schemas/                # Pydantic request/response schemas
-│   │   ├── tasks/                  # Celery background tasks
-│   │   ├── core/                   # Config, security, logging, exceptions
-│   │   └── db/                     # Async engine, session, repositories
-│   ├── tests/
-│   ├── migrations/                 # Alembic migration scripts
-│   ├── Dockerfile
-│   └── requirements.txt
+│   │   ├── api/v1/                Route handlers → delegate to services
+│   │   ├── services/              Business logic (import, analytics, budget, auth)
+│   │   ├── ai/                    Pluggable AI: OpenAI + Gemini with shared interface
+│   │   ├── models/                SQLAlchemy ORM models
+│   │   ├── schemas/               Pydantic v2 request/response schemas
+│   │   ├── tasks/                 Celery background tasks
+│   │   └── core/                  Config, security, logging, exceptions
+│   ├── tests/                     18 tests, in-memory SQLite
+│   ├── migrations/                Alembic migration scripts
+│   └── Dockerfile
 │
-├── frontend/                       # Flutter mobile app
+├── 📱 frontend/                   Flutter mobile app
 │   └── lib/
-│       ├── features/               # Feature-first folder structure
-│       │   ├── auth/
-│       │   ├── dashboard/
-│       │   ├── imports/
-│       │   ├── budgets/
-│       │   ├── transactions/
-│       │   ├── analytics/
-│       │   └── ai/
-│       ├── core/                   # Theme, network client, secure storage, utils
+│       ├── features/              Feature-first modules (auth, dashboard, imports…)
+│       ├── core/                  Theme, network client, secure storage
 │       └── shared/widgets/
 │
-├── web/                            # Next.js web dashboard
+├── 🌐 web/                        Next.js 16 web dashboard
 │   ├── app/
-│   │   ├── (auth)/                 # Auth route group (login, register)
-│   │   │   ├── login/page.tsx
-│   │   │   └── register/page.tsx
-│   │   ├── (app)/                  # App route group (sidebar + topbar shell)
-│   │   │   ├── dashboard/page.tsx
-│   │   │   ├── transactions/
-│   │   │   ├── import/page.tsx
-│   │   │   ├── budgets/page.tsx
-│   │   │   ├── analytics/page.tsx
-│   │   │   ├── ai/page.tsx
-│   │   │   ├── notifications/page.tsx
-│   │   │   └── settings/page.tsx
-│   │   ├── page.tsx                # Landing page
-│   │   ├── not-found.tsx           # 404
-│   │   ├── globals.css             # Tailwind v4 design system (@theme tokens)
-│   │   └── layout.tsx
+│   │   ├── (auth)/                Login + Register (split-panel layout)
+│   │   └── (app)/                 Sidebar shell — all 12 app pages
 │   ├── components/
-│   │   ├── layout/                 # Sidebar (animated width, layoutId nav), Topbar
-│   │   ├── motion/                 # AnimatedNumber, PageTransition, Stagger
-│   │   └── ui/                     # Button, Card, Dialog, Input, Progress, Skeleton, Badge
-│   ├── contexts/auth.tsx           # JWT auth context + auto-refresh
+│   │   ├── layout/                Sidebar (animated, layoutId nav), Topbar
+│   │   ├── motion/                AnimatedNumber, PageTransition, Stagger
+│   │   └── ui/                    Button, Card, Dialog, Input, Progress, Skeleton…
+│   ├── contexts/auth.tsx          JWT context + silent refresh
 │   ├── lib/
-│   │   ├── api/                    # One file per resource (auth, transactions, …)
-│   │   ├── motion.ts               # Spring presets, shared variants
-│   │   └── utils.ts                # cn(), formatCurrency (INR/lakh), formatDate
-│   └── types/index.ts              # All TypeScript types matching backend schemas
+│   │   ├── api/                   Type-safe API client per resource
+│   │   ├── motion.ts              Spring presets + shared animation variants
+│   │   └── utils.ts               cn(), formatCurrency (INR/lakh), formatDate
+│   └── types/index.ts             TypeScript types mirroring backend schemas
 │
-├── docker-compose.yml              # Full stack: API + PostgreSQL + Redis + Celery
-├── .env.example                    # Documented environment variable template
-└── README.md
+├── 🐳 docker-compose.yml          Postgres + Redis + API + Celery worker
+├── 📄 .env.example                Every variable documented
+└── 📖 README.md
 ```
 
 ---
 
-## Screenshots
+## 🛠️ Tech Decisions
 
-> Add screenshots of: Landing page · Dashboard · CSV Import flow · Budget tracking · AI assistant chat
+<details>
+<summary><b>Why FastAPI over Django?</b></summary>
+FastAPI is async-native — the right fit for an I/O-heavy backend that makes concurrent database queries, Redis reads, and AI API calls. Pydantic v2 validates every request automatically. Django's ORM and admin are unnecessary overhead for an API-only service.
+</details>
+
+<details>
+<summary><b>Why Celery for CSV processing?</b></summary>
+Parsing and AI-categorising 1,000+ transactions takes 20–30 seconds. FastAPI BackgroundTasks runs in-process and blocks the event loop. Celery workers are out-of-process, scale independently, and retry on failure — the API returns a job ID immediately and the client polls status.
+</details>
+
+<details>
+<summary><b>Why PostgreSQL over NoSQL?</b></summary>
+Financial data is inherently relational: users → accounts → transactions → categories → budgets. SQL aggregations (GROUP BY, month-over-month, savings rate) are clean and fast with proper indexing. The schema is stable and well-defined — document stores add no benefit here.
+</details>
+
+<details>
+<summary><b>Why Tailwind v4 CSS-first config?</b></summary>
+v4 uses <code>@theme {}</code> directives instead of <code>tailwind.config.js</code> — all design tokens become CSS custom properties (<code>var(--color-accent)</code> etc.). This makes Recharts styling trivial since chart props accept CSS variable strings directly.
+</details>
+
+<details>
+<summary><b>Why Framer Motion?</b></summary>
+Spring physics (<code>stiffness</code>, <code>damping</code>, <code>mass</code>) produce natural-feeling motion without hand-coding CSS transitions. <code>layoutId</code> shared-layout makes the nav indicator slide between items with zero position math. <code>AnimatePresence</code> handles mount/unmount — critical for page transitions and dialogs.
+</details>
 
 ---
 
-## License
+## 📸 Screenshots
 
-This is a personal project by **Aayush Ramrakhyani**. All rights reserved.
+> Dashboard · CSV Import · Budget Tracking · AI Chat — *coming soon*
+
+---
+
+<div align="center">
+
+**Built by [Aayush Ramrakhyani](https://github.com/Aayush-Ramrakhyani)**
+
+*This is a personal project. All rights reserved.*
+
+</div>
