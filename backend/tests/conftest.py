@@ -1,3 +1,8 @@
+"""
+conftest.py
+Pytest fixtures for the test suite: in-memory SQLite engine, per-test session with
+rollback isolation, ASGI test client with DB override, and reusable test data factories.
+"""
 import asyncio
 import uuid
 from decimal import Decimal
@@ -49,7 +54,7 @@ async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
     async def override_get_db():
         yield db_session
 
-    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_db] = override_get_db  # replace real DB session with the test session for all requests
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as c:
         yield c

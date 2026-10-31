@@ -1,4 +1,8 @@
-"""All financial calculations are deterministic SQL queries. AI never computes totals."""
+"""
+analytics_service.py
+Pure SQL analytics engine for financial overviews, category breakdowns, cash-flow trends,
+and anomaly detection. All figures are computed in the DB — AI never recalculates totals.
+"""
 
 import calendar
 from datetime import date
@@ -255,7 +259,7 @@ class AnalyticsService:
                 Transaction.transaction_date >= start_date,
                 Transaction.transaction_date <= end_date,
                 Transaction.is_deleted == False,
-                Transaction.transfer_id == None,
+                Transaction.transfer_id == None,  # exclude transfer legs so they don't inflate income/expense totals
             )
         )
         return result.scalar_one() or Decimal("0.00")

@@ -1,4 +1,8 @@
-"""Hybrid categorization: rule-based first, then AI."""
+"""
+categorization_service.py
+Hybrid transaction categorizer: fast regex rule matching runs first (95% confidence);
+only falls back to the AI provider when no rule matches, minimising LLM call volume.
+"""
 import json
 import re
 from decimal import Decimal
@@ -136,26 +140,26 @@ class CategorizationService:
             messages = [
                 AIProviderMessage(
                     role="user",
-                    content=json.dumps({
+                    content=json.dumps({  # structured JSON payload sent as the AI prompt body
                         "merchant": merchant,
                         "description": description,
                         "amount": str(amount),
                         "type": transaction_type,
-                        "available_categories": cat_names,
+                        "available_categories": cat_names,  # constrain AI to the user's actual category list
                     })
                 )
             ]
-            raw = await self.ai_provider.complete_structured(
+            raw = await self.ai_provider.complete_structured(  # LLM call — returns structured JSON matching TransactionClassification
                 messages, TransactionClassification, CATEGORIZATION_SYSTEM
             )
             result = TransactionClassification(**raw)
 
             # Validate that category exists
-            if result.category not in cat_names:
+            if result.category not in cat_names:  # AI may hallucinate a category name not in the DB
                 result.category = (
                     "Other Income" if transaction_type == "income" else "Other Expense"
                 )
-                result.confidence = 0.3
+                result.confidence = 0.3  # low confidence assigned when AI output is sanitised to a fallback
 
             return result
         except Exception as e:

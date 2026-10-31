@@ -1,3 +1,8 @@
+"""
+category.py
+Pydantic schemas for category management, supporting hierarchical nested responses
+via the self-referential CategoryResponse.children list and model_rebuild().
+"""
 import uuid
 from datetime import datetime
 from typing import Optional

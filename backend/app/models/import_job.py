@@ -1,3 +1,8 @@
+"""
+import_job.py
+ORM model tracking the lifecycle of a CSV bank-statement import, from upload through
+column-mapping preview, user confirmation, and final completion or failure.
+"""
 import uuid
 from datetime import datetime, timezone
 from typing import Optional

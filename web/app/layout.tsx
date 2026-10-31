@@ -1,3 +1,9 @@
+/*
+ * layout.tsx
+ * Root Next.js layout — loads Geist fonts, sets HTML metadata, and wraps the entire
+ * app in AuthProvider so every page can access authentication state.
+ */
+
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"

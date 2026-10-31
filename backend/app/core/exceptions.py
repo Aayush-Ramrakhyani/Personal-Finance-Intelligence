@@ -1,3 +1,7 @@
+"""
+exceptions.py
+Custom exception hierarchy rooted at FinanceException, plus FastAPI exception handlers that convert all errors to a consistent JSON error envelope.
+"""
 from fastapi import HTTPException, Request, status
 from fastapi.responses import JSONResponse
 

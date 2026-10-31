@@ -1,3 +1,8 @@
+"""
+transfer.py
+ORM model linking a paired debit/credit transaction for account-to-account transfers,
+ensuring both sides are excluded from net income/expense analytics.
+"""
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal

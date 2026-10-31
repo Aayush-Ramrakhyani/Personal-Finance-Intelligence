@@ -1,3 +1,7 @@
+"""
+ai_repository.py
+Data-access for AI conversations, messages, and financial insights; add_message atomically increments message_count on the parent conversation.
+"""
 from typing import Optional
 from uuid import UUID
 
@@ -72,7 +76,7 @@ class AIRepository(BaseRepository[AIConversation]):
             .limit(limit)
         )
         msgs = list(result.scalars().all())
-        return list(reversed(msgs))
+        return list(reversed(msgs))  # Query fetches newest-first, reverse to restore chronological order
 
 
 class InsightRepository(BaseRepository[FinancialInsight]):

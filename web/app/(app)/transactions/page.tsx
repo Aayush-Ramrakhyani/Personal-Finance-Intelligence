@@ -1,3 +1,9 @@
+/*
+ * (app)/transactions/page.tsx
+ * Paginated, filterable transaction list — supports search with debounce, type/category/
+ * date filters, sort toggling, and links to individual transaction detail pages.
+ */
+
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
@@ -49,7 +55,7 @@ export default function TransactionsPage() {
 
   /* Debounce search */
   useEffect(() => {
-    const t = setTimeout(() => setSearchDebounced(search), 400)
+    const t = setTimeout(() => setSearchDebounced(search), 400) // 400 ms debounce before firing API search
     return () => clearTimeout(t)
   }, [search])
 
@@ -76,7 +82,7 @@ export default function TransactionsPage() {
   useEffect(() => { fetchTransactions() }, [fetchTransactions])
 
   const setFilter = <K extends keyof TransactionFilters>(k: K, v: TransactionFilters[K]) =>
-    setFilters(f => ({ ...f, [k]: v, page: 1 }))
+    setFilters(f => ({ ...f, [k]: v, page: 1 })) // reset to page 1 whenever any filter changes
 
   const clearFilters = () =>
     setFilters({ page: 1, limit: 20, sort_by: "transaction_date", sort_order: "desc" })

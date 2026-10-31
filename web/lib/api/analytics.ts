@@ -1,3 +1,9 @@
+/*
+ * analytics.ts
+ * Analytics API module — provides overview stats, category breakdowns, monthly cash-flow,
+ * multi-month trend data, and anomaly detection endpoints for dashboard and analytics pages.
+ */
+
 import { api } from "./client"
 import type {
   SuccessResponse,

@@ -1,3 +1,8 @@
+"""
+category_service.py
+Manages system category seeding (run once on startup) and user-defined custom categories,
+enforcing that system categories cannot be modified or deleted by any user.
+"""
 from typing import Optional
 from uuid import UUID
 
@@ -86,7 +91,7 @@ class CategoryService:
     async def ensure_system_categories(self) -> None:
         count = await self.repo.count_system_categories()
         if count > 0:
-            return  # Already seeded
+            return  # idempotent guard — skip if system categories already seeded
 
         # Create parent categories
         parent_map: dict[str, UUID] = {}
@@ -150,6 +155,6 @@ class CategoryService:
         cat = await self.repo.get(category_id)
         if not cat:
             raise NotFoundError("Category")
-        if cat.is_system or (cat.user_id and cat.user_id != user_id):
+        if cat.is_system or (cat.user_id and cat.user_id != user_id):  # guard: system categories and other users' categories are immutable
             raise AuthorizationError()
         await self.repo.update(cat, {"is_active": False})

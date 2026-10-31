@@ -1,3 +1,7 @@
+"""
+openai_provider.py
+OpenAI implementation of AIProvider: uses AsyncOpenAI with response_format=json_object for structured calls and a 3-attempt retry loop for resilience.
+"""
 import json
 from typing import Type
 
@@ -79,7 +83,7 @@ class OpenAIProvider(AIProvider):
                     messages=api_messages,
                     temperature=0.1,
                     max_tokens=1024,
-                    response_format={"type": "json_object"},
+                    response_format={"type": "json_object"},  # guarantees valid JSON output
                 )
                 content = response.choices[0].message.content or "{}"
                 return json.loads(content)

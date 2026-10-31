@@ -1,3 +1,7 @@
+"""
+analytics.py
+Analytics endpoints: delegates all financial calculations to AnalyticsService (pure SQL — no AI involvement in numbers).
+"""
 import calendar
 from datetime import date
 from typing import Optional

@@ -1,3 +1,9 @@
+/*
+ * progress.tsx
+ * ProgressBar (linear) and CircularProgress (SVG arc) components that animate
+ * to a percentage value with semantic colour variants for budget/spending states.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -50,9 +56,9 @@ export function ProgressBar({
 
   const autoVariant =
     variant === "default" && percentage >= 90
-      ? "expense"
+      ? "expense" // automatically turn red when nearly full
       : variant === "default" && percentage >= 75
-      ? "warning"
+      ? "warning" // turn amber at 75 % as an early warning
       : variant
 
   return (
@@ -95,7 +101,7 @@ export function CircularProgress({
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const percentage = Math.min(value, 100)
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
+  const strokeDashoffset = circumference - (percentage / 100) * circumference // SVG arc offset that represents the filled portion
 
   const colors = {
     default: "var(--color-accent)",

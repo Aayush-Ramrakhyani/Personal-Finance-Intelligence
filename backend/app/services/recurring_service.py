@@ -1,4 +1,8 @@
-"""Statistical recurring expense detection - no AI for number crunching."""
+"""
+recurring_service.py
+Statistical detection of recurring transactions by grouping expenses per merchant and
+testing day-interval regularity; no AI involved — confidence is purely math-based.
+"""
 import calendar
 from datetime import date, timedelta
 from decimal import Decimal
@@ -59,7 +63,7 @@ class RecurringService:
             for key, grp in groups.items():
                 key_amount = grp[0]["amount"]
                 if merchant == key.split("|")[0]:
-                    if abs(amount - key_amount) / max(key_amount, Decimal("1")) <= 0.10:
+                    if abs(amount - key_amount) / max(key_amount, Decimal("1")) <= 0.10:  # allow ±10% variance to group slightly fluctuating bills
                         grp.append({
                             "merchant": row.merchant,
                             "amount": amount,
@@ -153,11 +157,11 @@ class RecurringService:
                 else:
                     try:
                         std = stdev(intervals)
-                        consistency = max(0.0, 1.0 - std / max(avg_interval, 1))
+                        consistency = max(0.0, 1.0 - std / max(avg_interval, 1))  # lower std → higher consistency
                     except Exception:
                         consistency = 0.6
-                count_bonus = min(0.2, len(intervals) * 0.05)
-                confidence = min(1.0, consistency * 0.8 + count_bonus)
+                count_bonus = min(0.2, len(intervals) * 0.05)  # bonus capped at 0.2 for many occurrences
+                confidence = min(1.0, consistency * 0.8 + count_bonus)  # weighted: 80% consistency + 20% occurrence count
                 return freq, confidence
         return "monthly", 0.3
 

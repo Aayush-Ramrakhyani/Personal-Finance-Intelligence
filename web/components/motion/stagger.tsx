@@ -1,3 +1,9 @@
+/*
+ * stagger.tsx
+ * Stagger and StaggerItem components that orchestrate sequenced enter animations
+ * for lists and grids, supporting slide-up and scale-in child variants.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"

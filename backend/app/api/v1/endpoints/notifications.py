@@ -1,3 +1,7 @@
+"""
+notifications.py
+Notification endpoints: list, unread count, mark selected or all notifications as read.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query

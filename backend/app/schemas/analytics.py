@@ -1,3 +1,8 @@
+"""
+analytics.py
+Read-only Pydantic response schemas for all analytics endpoints: financial overview,
+category breakdowns, cash-flow trends, spending anomalies, and budget performance.
+"""
 from datetime import date
 from decimal import Decimal
 from typing import Optional

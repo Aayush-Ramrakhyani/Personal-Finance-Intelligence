@@ -1,3 +1,9 @@
+/*
+ * (app)/settings/page.tsx
+ * User settings page covering profile editing, security info, data-privacy disclosure,
+ * and a sign-out button; reads the current user from AuthContext.
+ */
+
 "use client"
 
 import { useState } from "react"
@@ -17,7 +23,7 @@ export default function SettingsPage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     /* Profile update endpoint not yet exposed — show success optimistically */
-    setSaved(true)
+    setSaved(true) // optimistic feedback; revert after 2.5 s
     setTimeout(() => setSaved(false), 2500)
   }
 

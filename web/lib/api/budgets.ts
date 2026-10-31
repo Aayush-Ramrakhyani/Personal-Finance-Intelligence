@@ -1,3 +1,9 @@
+/*
+ * budgets.ts
+ * Budgets API module — CRUD for per-category spending budgets, returning live
+ * spent/remaining/percentage_used figures computed server-side.
+ */
+
 import { api } from "./client"
 import type { SuccessResponse, Budget, BudgetCreate, BudgetUpdate } from "@/types"
 

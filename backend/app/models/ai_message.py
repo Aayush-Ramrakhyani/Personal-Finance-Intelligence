@@ -1,3 +1,7 @@
+"""
+ai_message.py
+ORM model for individual messages within an AI conversation; role is constrained to 'user' or 'assistant' via CheckConstraint.
+"""
 import uuid
 from datetime import datetime, timezone
 from typing import Optional

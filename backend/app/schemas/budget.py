@@ -1,3 +1,8 @@
+"""
+budget.py
+Pydantic schemas for budget CRUD and progress tracking, including period validation,
+alert-threshold configuration, and over-budget detection in BudgetWithProgress.
+"""
 import uuid
 from datetime import date, datetime
 from decimal import Decimal

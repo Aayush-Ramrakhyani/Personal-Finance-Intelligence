@@ -1,3 +1,7 @@
+"""
+imports.py
+CSV import endpoints: validates file (extension, size), saves to UPLOAD_DIR, and drives the 4-step import pipeline (upload → columns → preview → confirm).
+"""
 import os
 import uuid
 from uuid import UUID

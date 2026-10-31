@@ -1,3 +1,9 @@
+/*
+ * input.tsx
+ * Styled text input (and TextArea variant) with optional label, error/hint messages,
+ * and left/right icon slots; auto-generates an id from the label for accessibility.
+ */
+
 "use client"
 
 import { cn } from "@/lib/utils"
@@ -72,7 +78,7 @@ interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export function TextArea({ label, error, className, id, ...props }: TextAreaProps) {
-  const inputId = id ?? label?.toLowerCase().replace(/\s+/g, "-")
+  const inputId = id ?? label?.toLowerCase().replace(/\s+/g, "-") // same id derivation for TextArea
   return (
     <div className="flex flex-col gap-1.5">
       {label && (

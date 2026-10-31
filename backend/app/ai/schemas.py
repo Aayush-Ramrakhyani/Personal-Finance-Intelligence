@@ -1,3 +1,7 @@
+"""
+schemas.py
+Pydantic output schemas for structured AI responses: classification, query intent, insights, monthly summary, and budget recommendations.
+"""
 from decimal import Decimal
 from typing import Optional
 

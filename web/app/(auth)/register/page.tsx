@@ -1,3 +1,9 @@
+/*
+ * (auth)/register/page.tsx
+ * Registration form with client-side password validation (length, uppercase, digit),
+ * calls AuthContext.register to create an account and immediately navigate to /dashboard.
+ */
+
 "use client"
 
 import { useState } from "react"
@@ -35,7 +41,7 @@ export default function RegisterPage() {
       setError("Passwords do not match."); return
     }
     if (form.password.length < 8) {
-      setError("Password must be at least 8 characters."); return
+      setError("Password must be at least 8 characters."); return // mirrors backend password policy
     }
     if (!/[A-Z]/.test(form.password)) {
       setError("Password must contain at least one uppercase letter."); return

@@ -1,3 +1,7 @@
+"""
+recurring.py
+Recurring-transaction endpoints: runs detection before every list request, and allows users to confirm or reject detected patterns.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

@@ -1,3 +1,9 @@
+/*
+ * sidebar.tsx
+ * Collapsible navigation sidebar — animates between expanded (220 px) and icon-only
+ * (64 px) modes, highlights the active route, and exposes user info and logout.
+ */
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -32,9 +38,9 @@ export function Sidebar() {
   /* Collapse on mobile by default */
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 1024px)")
-    if (mq.matches) setExpanded(false)
+    if (mq.matches) setExpanded(false) // start collapsed on mobile
     const handler = (e: MediaQueryListEvent) => { if (e.matches) setExpanded(false) }
-    mq.addEventListener("change", handler)
+    mq.addEventListener("change", handler) // re-collapse if viewport shrinks past breakpoint
     return () => mq.removeEventListener("change", handler)
   }, [])
 
@@ -76,7 +82,7 @@ export function Sidebar() {
         className="flex-1 flex flex-col gap-0.5 px-2"
       >
         {navItems.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(item.href + "/")
+          const active = pathname === item.href || pathname.startsWith(item.href + "/") // match nested routes like /transactions/:id
           return (
             <motion.div key={item.href} variants={staggerItem}>
               <Link href={item.href}>
@@ -91,7 +97,7 @@ export function Sidebar() {
                 >
                   {active && (
                     <motion.div
-                      layoutId="nav-active"
+                      layoutId="nav-active" // shared layoutId makes the active indicator slide between items
                       className="absolute inset-0 rounded-lg bg-[rgba(124,110,246,0.12)] border border-[rgba(124,110,246,0.20)]"
                       transition={spring.smooth}
                     />

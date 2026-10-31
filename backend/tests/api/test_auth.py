@@ -1,3 +1,8 @@
+"""
+test_auth.py
+Integration tests for the authentication API: registration, duplicate-email rejection,
+password-strength enforcement, login, token refresh, and route-level auth guards.
+"""
 import pytest
 from httpx import AsyncClient
 

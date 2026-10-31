@@ -1,3 +1,7 @@
+"""
+account_repository.py
+Data-access layer for Account; update_balance uses an atomic SQL UPDATE (balance + delta) to avoid read-modify-write races.
+"""
 from decimal import Decimal
 from typing import Optional
 from uuid import UUID

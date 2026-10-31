@@ -1,3 +1,9 @@
+/*
+ * badge.tsx
+ * Small inline status badge with semantic colour variants (income, expense, warning,
+ * info, etc.) and an optional leading dot for live-status indicators.
+ */
+
 import { cn } from "@/lib/utils"
 
 export type BadgeVariant = "default" | "income" | "expense" | "transfer" | "warning" | "info" | "success" | "muted"

@@ -1,3 +1,9 @@
+/*
+ * index.ts
+ * Central TypeScript type definitions for the entire frontend — API envelope shapes,
+ * domain models (User, Transaction, Budget, AI, etc.), and UI state helpers.
+ */
+
 /* ─── Common API envelopes ────────────────────────────────────────────────── */
 export interface SuccessResponse<T> {
   success: true

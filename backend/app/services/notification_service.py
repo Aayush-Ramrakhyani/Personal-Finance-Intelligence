@@ -1,3 +1,8 @@
+"""
+notification_service.py
+Service layer for creating, listing, and marking notifications; thin wrapper around
+the notification repository, used by budget and analytics tasks to surface alerts.
+"""
 from typing import Optional
 from uuid import UUID
 

@@ -1,3 +1,9 @@
+/*
+ * (app)/notifications/page.tsx
+ * Notifications centre — lists budget alerts, overspend warnings, and AI insights
+ * with read/unread state and a bulk "mark all read" action.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"

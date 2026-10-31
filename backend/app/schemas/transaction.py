@@ -1,3 +1,8 @@
+"""
+transaction.py
+Pydantic schemas for transaction creation, update, and filtering, including
+TransactionFilter for paginated list queries and TransactionResponse with nested category.
+"""
 import uuid
 from datetime import date, datetime
 from decimal import Decimal

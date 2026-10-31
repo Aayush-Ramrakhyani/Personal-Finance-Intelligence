@@ -1,8 +1,13 @@
+"""
+logging.py
+Configures structlog with sensitive-field redaction; outputs JSON in production and coloured console in debug mode.
+"""
 import logging
 import sys
 import structlog
 from app.core.config import settings
 
+# Any log key containing these substrings will have its value replaced with ***REDACTED***
 SENSITIVE_KEYS = {"password", "token", "secret", "api_key", "authorization", "credit_card"}
 
 
@@ -22,7 +27,7 @@ def setup_logging() -> None:
             structlog.processors.add_log_level,
             structlog.processors.TimeStamper(fmt="iso"),
             _filter_sensitive,
-            structlog.dev.ConsoleRenderer() if settings.DEBUG else structlog.processors.JSONRenderer(),
+            structlog.dev.ConsoleRenderer() if settings.DEBUG else structlog.processors.JSONRenderer(),  # JSON in prod, readable colours in dev
         ],
         wrapper_class=structlog.make_filtering_bound_logger(log_level),
         context_class=dict,

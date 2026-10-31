@@ -1,3 +1,9 @@
+/*
+ * (app)/layout.tsx
+ * Protected shell layout for all authenticated app routes — guards against
+ * unauthenticated access by redirecting to /login, then renders Sidebar + Topbar.
+ */
+
 "use client"
 
 import { useEffect } from "react"
@@ -12,7 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) router.replace("/login")
+    if (!isLoading && !isAuthenticated) router.replace("/login") // redirect unauthenticated users to login
   }, [isAuthenticated, isLoading, router])
 
   if (isLoading) {
@@ -28,7 +34,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!isAuthenticated) return null
+  if (!isAuthenticated) return null // prevent flash of app shell before redirect completes
 
   return (
     <div className="flex h-dvh overflow-hidden">

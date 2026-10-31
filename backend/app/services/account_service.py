@@ -1,3 +1,8 @@
+"""
+account_service.py
+Business logic for account CRUD and real-time balance adjustments when transactions
+are created, updated, or deleted; uses soft-delete (is_active=False) for archiving.
+"""
 from decimal import Decimal
 from typing import Optional
 from uuid import UUID
@@ -22,7 +27,7 @@ class AccountService:
             "institution_name": data.institution_name,
             "currency": data.currency,
             "opening_balance": data.opening_balance,
-            "current_balance": data.opening_balance,  # starts at opening balance
+            "current_balance": data.opening_balance,  # initialise current_balance = opening_balance on creation
             "color": data.color,
         })
         return AccountResponse.model_validate(account)

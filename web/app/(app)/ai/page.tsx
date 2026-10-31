@@ -1,3 +1,9 @@
+/*
+ * (app)/ai/page.tsx
+ * AI Assistant page — hosts a conversation list sidebar alongside a chat panel,
+ * and surfaces AI-generated insights via the /ai API endpoints.
+ */
+
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -38,7 +44,7 @@ export default function AIPage() {
       .then(([c, ins]) => {
         setConversations(c.data)
         setInsights(ins.data)
-        if (c.data.length > 0) loadConversation(c.data[0].id)
+        if (c.data.length > 0) loadConversation(c.data[0].id) // auto-open the most recent conversation
       })
       .finally(() => setLoading(false))
   }, [])
@@ -61,7 +67,7 @@ export default function AIPage() {
     let convId = activeConvId
 
     if (!convId) {
-      const res = await aiApi.createConversation(content.slice(0, 60))
+      const res = await aiApi.createConversation(content.slice(0, 60)) // lazily create conversation titled with first 60 chars
       setConversations(c => [res.data, ...c])
       convId = res.data.id
       setActiveConvId(convId)
@@ -96,7 +102,7 @@ export default function AIPage() {
 
   /* Auto-scroll on new messages */
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" }) // keep the latest message visible
   }, [messages, sending])
 
   async function generateInsights() {

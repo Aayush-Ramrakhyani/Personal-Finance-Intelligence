@@ -1,4 +1,8 @@
-"""CSV import pipeline - parse, normalize, deduplicate, stage, confirm."""
+"""
+import_service.py
+Full CSV import pipeline: encoding detection, column auto-mapping, row parsing,
+duplicate detection, staging to ImportTransaction, and user-confirmed bulk insert.
+"""
 import io
 import os
 import re
@@ -132,7 +136,7 @@ class ImportService:
                     )
                     if dup:
                         staged_txn.is_duplicate = True
-                        staged_txn.duplicate_confidence = Decimal(str(dup["confidence"]))
+                        staged_txn.duplicate_confidence = Decimal(str(dup["confidence"]))  # repository returns a 0–1 similarity score
 
                     self.db.add(staged_txn)
                     staged.append(staged_txn)
@@ -285,12 +289,12 @@ class ImportService:
         # Detect encoding
         with open(file_path, "rb") as f:
             raw = f.read()
-        detected = chardet.detect(raw)
+        detected = chardet.detect(raw)  # chardet inspects byte patterns to guess file encoding
         encoding = detected.get("encoding") or "utf-8"
         try:
             df = pd.read_csv(file_path, encoding=encoding, skip_blank_lines=True)
         except Exception:
-            df = pd.read_csv(file_path, encoding="latin-1", skip_blank_lines=True)
+            df = pd.read_csv(file_path, encoding="latin-1", skip_blank_lines=True)  # fallback for Indian bank CSVs with Windows-1252 encoding
         # Strip column names
         df.columns = [str(c).strip() for c in df.columns]
         return df.dropna(how="all")
@@ -376,8 +380,8 @@ class ImportService:
 
         description = get_col(mapping.description_column) or ""
         merchant_raw = get_col(mapping.merchant_column) or description
-        from app.ai.merchant_normalizer import normalize_merchant
-        merchant = normalize_merchant(merchant_raw)
+        from app.ai.merchant_normalizer import normalize_merchant  # lazy import avoids circular dependency
+        merchant = normalize_merchant(merchant_raw)  # strips noise (UPI IDs, bank refs) to a clean display name
 
         ref = get_col(mapping.reference_column)
 

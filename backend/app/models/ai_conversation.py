@@ -1,3 +1,7 @@
+"""
+ai_conversation.py
+ORM model for AI chat conversations; tracks message_count and updated_at for display sorting in the sidebar.
+"""
 import uuid
 from datetime import datetime, timezone
 from typing import Optional

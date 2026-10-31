@@ -1,3 +1,7 @@
+"""
+reports.py
+Monthly report endpoint: aggregates current-month overview, previous-month comparison, top categories, anomalies, and recurring cost summary.
+"""
 import calendar
 from datetime import date
 from decimal import Decimal

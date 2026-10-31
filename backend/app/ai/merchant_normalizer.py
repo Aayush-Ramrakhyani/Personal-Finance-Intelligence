@@ -1,3 +1,7 @@
+"""
+merchant_normalizer.py
+Cleans raw merchant names from bank statements: strips noise patterns, matches against a known-alias lookup table, and title-cases unknown names.
+"""
 import re
 from typing import Optional
 

@@ -1,3 +1,9 @@
+/*
+ * topbar.tsx
+ * Sticky top header bar — derives the page title from the current pathname,
+ * polls the unread notification count on every route change, and renders a bell badge.
+ */
+
 "use client"
 
 import { usePathname } from "next/navigation"
@@ -30,7 +36,7 @@ export function Topbar() {
 
   useEffect(() => {
     notificationsApi.unreadCount()
-      .then((r) => setUnread(r.data.count))
+      .then((r) => setUnread(r.data.count)) // refresh badge count whenever the user navigates
       .catch(() => {})
   }, [pathname])
 

@@ -1,3 +1,8 @@
+"""
+user.py
+ORM model for application users, storing credentials, preferences, and cascading
+relationships to accounts, transactions, budgets, notifications, and AI conversations.
+"""
 import uuid
 from datetime import datetime, timezone
 

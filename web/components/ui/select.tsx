@@ -1,3 +1,9 @@
+/*
+ * select.tsx
+ * Styled native <select> wrapper with label, error message, a custom chevron icon,
+ * and the same design-token styling as the Input component.
+ */
+
 "use client"
 
 import { cn } from "@/lib/utils"

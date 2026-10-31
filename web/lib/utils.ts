@@ -1,3 +1,9 @@
+/*
+ * utils.ts
+ * Shared utility functions: Tailwind class merging (cn), INR currency/date formatting,
+ * percent/clamp helpers, category colour mapping, and a truncate utility.
+ */
+
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -14,7 +20,7 @@ export function formatCurrency(
   if (isNaN(num)) return "—"
 
   if (compact && Math.abs(num) >= 1_00_000) {
-    const lakhs = num / 1_00_000
+    const lakhs = num / 1_00_000 // Indian number system: 1 lakh = 100 000
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency,

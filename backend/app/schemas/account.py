@@ -1,3 +1,8 @@
+"""
+account.py
+Pydantic request/response schemas for account creation, update, and serialization,
+including type validation against the allowed account-type enum.
+"""
 import uuid
 from datetime import datetime
 from decimal import Decimal

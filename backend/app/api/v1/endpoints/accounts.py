@@ -1,3 +1,7 @@
+"""
+accounts.py
+REST endpoints for account CRUD; all routes require a verified JWT (get_current_user_id dependency).
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

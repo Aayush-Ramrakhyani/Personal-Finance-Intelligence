@@ -1,3 +1,8 @@
+"""
+import_job.py
+Pydantic schemas for the CSV import pipeline: column-mapping requests, staged
+transaction previews with duplicate scores, import confirmation, and job status.
+"""
 import uuid
 from datetime import date, datetime
 from decimal import Decimal

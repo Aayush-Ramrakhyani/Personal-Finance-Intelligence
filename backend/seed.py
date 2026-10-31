@@ -48,7 +48,7 @@ async def seed(db: AsyncSession) -> None:
     print(f"Creating demo user: {DEMO_EMAIL} / {DEMO_PASSWORD}")
     demo_user = User(
         email=DEMO_EMAIL,
-        password_hash=hash_password(DEMO_PASSWORD),
+        password_hash=hash_password(DEMO_PASSWORD),  # bcrypt hash stored; DEMO_PASSWORD is only for local dev
         first_name="Demo",
         last_name="User",
         currency="INR",
@@ -158,7 +158,7 @@ async def seed(db: AsyncSession) -> None:
             txn_date = today - timedelta(days=days_ago)
             txn = Transaction(
                 user_id=demo_user.id,
-                account_id=credit_acc.id if "subscription" in desc.lower() or cat_name == "Shopping" else savings_acc.id,
+                account_id=credit_acc.id if "subscription" in desc.lower() or cat_name == "Shopping" else savings_acc.id,  # route subscriptions/shopping to credit card, others to savings
                 category_id=cat_map.get(cat_name),
                 type=txn_type,
                 amount=amount * Decimal(str(random.uniform(0.9, 1.1))).quantize(Decimal("0.01")),

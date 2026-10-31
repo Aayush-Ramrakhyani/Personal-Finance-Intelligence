@@ -1,3 +1,9 @@
+/*
+ * (app)/dashboard/page.tsx
+ * Main dashboard that fetches overview stats, cash-flow area chart, category pie,
+ * budget progress, recent transactions, and account balances in a single parallel request.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -45,7 +51,7 @@ export default function DashboardPage() {
         setOverview(ov.data)
         setCashFlow(cf.data)
         setCategories(cat.data.slice(0, 6))
-        setBudgets(bud.data.filter(b => b.is_active).slice(0, 4))
+        setBudgets(bud.data.filter(b => b.is_active).slice(0, 4)) // show up to 4 active budgets in the summary widget
         setRecent(tx.data)
       })
       .catch(() => setError("Failed to load dashboard data."))
@@ -71,7 +77,7 @@ export default function DashboardPage() {
     </div>
   )
 
-  const income   = parseFloat(overview?.total_income   ?? "0")
+  const income   = parseFloat(overview?.total_income   ?? "0") // default to 0 when overview not yet loaded
   const expenses = parseFloat(overview?.total_expenses ?? "0")
   const net      = parseFloat(overview?.net_cash_flow  ?? "0")
   const savings  = parseFloat(overview?.savings_rate   ?? "0")

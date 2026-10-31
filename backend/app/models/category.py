@@ -1,3 +1,8 @@
+"""
+category.py
+SQLAlchemy ORM model for transaction categories, supporting system-defined defaults,
+user-created custom categories, parent-child hierarchy, and income/expense typing.
+"""
 import uuid
 from datetime import datetime, timezone
 from typing import Optional

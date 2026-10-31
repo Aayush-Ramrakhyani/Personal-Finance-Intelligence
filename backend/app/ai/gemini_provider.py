@@ -1,3 +1,7 @@
+"""
+gemini_provider.py
+Google Gemini implementation of AIProvider: builds flat prompt strings (no system-role support) and strips markdown fences from structured JSON responses.
+"""
 import json
 from typing import Type
 
@@ -32,6 +36,7 @@ class GeminiProvider(AIProvider):
     def _build_prompt(
         self, messages: list[AIProviderMessage], system_prompt: str = ""
     ) -> str:
+        # Gemini has no system role — inject instructions as a labelled block at the top
         parts = []
         if system_prompt:
             parts.append(f"[System Instructions]\n{system_prompt}\n")
@@ -83,6 +88,7 @@ class GeminiProvider(AIProvider):
                 text = response.text or "{}"
                 # Clean markdown code blocks if present
                 text = text.strip()
+                # Strip markdown code fences that Gemini sometimes wraps JSON in
                 if text.startswith("```"):
                     text = text.split("```")[1]
                     if text.startswith("json"):

@@ -1,4 +1,8 @@
-"""AI financial assistant - AI explains verified backend data, never computes totals."""
+"""
+financial_assistant.py
+Conversational AI assistant that fetches verified SQL-computed financial context first,
+then injects it into the LLM prompt so the model explains data rather than inventing it.
+"""
 import calendar
 import json
 from datetime import date
@@ -31,15 +35,15 @@ class FinancialAssistant:
         conversation_history: list[AIProviderMessage],
     ) -> str:
         # Step 1: Parse intent from user question
-        intent = await self._parse_intent(user_message)
+        intent = await self._parse_intent(user_message)  # structured LLM call to classify query intent
 
         # Step 2: Fetch verified financial data based on intent
-        context = await self._get_financial_context(intent, user_id)
+        context = await self._get_financial_context(intent, user_id)  # SQL-computed figures, never estimated
 
         # Step 3: Build messages with verified context
         system = FINANCIAL_ASSISTANT_SYSTEM
         if context:
-            system += (
+            system += (  # inject verified data into system prompt so AI cites exact figures
                 f"\n\n[VERIFIED FINANCIAL DATA]\n{json.dumps(context, default=str, indent=2)}"
                 f"\n\nUse these exact figures in your response. Do not compute differently."
             )
@@ -49,18 +53,18 @@ class FinancialAssistant:
         ]
 
         # Step 4: AI generates natural language response
-        response = await self.ai.complete(messages, system_prompt=system, temperature=0.4)
+        response = await self.ai.complete(messages, system_prompt=system, temperature=0.4)  # low temp for factual financial responses
         return response
 
     async def _parse_intent(self, user_message: str) -> FinancialQueryIntent:
         try:
             messages = [AIProviderMessage(role="user", content=user_message)]
-            raw = await self.ai.complete_structured(
+            raw = await self.ai.complete_structured(  # LLM call: classify intent and extract period/category filters
                 messages, FinancialQueryIntent, QUERY_INTENT_SYSTEM
             )
             return FinancialQueryIntent(**raw)
         except Exception:
-            return FinancialQueryIntent(intent="general")
+            return FinancialQueryIntent(intent="general")  # safe fallback: general overview if intent parsing fails
 
     async def _get_financial_context(
         self, intent: FinancialQueryIntent, user_id: UUID

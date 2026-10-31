@@ -1,3 +1,7 @@
+"""
+router.py
+Aggregates all v1 API sub-routers into a single APIRouter that main.py mounts under /api/v1.
+"""
 from fastapi import APIRouter
 
 from app.api.v1.endpoints import (

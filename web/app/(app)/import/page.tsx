@@ -1,3 +1,9 @@
+/*
+ * (app)/import/page.tsx
+ * Multi-step CSV import wizard: Upload → Column Mapping → Transaction Preview → Confirm.
+ * Handles drag-and-drop, auto column detection, duplicate exclusion, and final commit.
+ */
+
 "use client"
 
 import { useState, useCallback } from "react"
@@ -81,7 +87,7 @@ export default function ImportPage() {
       const s = colRes.data.suggested_mapping
       setMapping(m => ({
         ...m,
-        date_column:        s.date_column        ?? "",
+        date_column:        s.date_column        ?? "", // pre-fill from backend auto-detection
         amount_column:      s.amount_column      ?? "",
         debit_column:       s.debit_column       ?? "",
         credit_column:      s.credit_column      ?? "",
@@ -114,7 +120,7 @@ export default function ImportPage() {
         default_currency:   mapping.default_currency,
       })
       setPreview(res.data)
-      setExcluded(new Set(res.data.transactions.filter(t => t.is_duplicate).map(t => t.id)))
+      setExcluded(new Set(res.data.transactions.filter(t => t.is_duplicate).map(t => t.id))) // pre-exclude detected duplicates
       setStep("preview")
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Preview failed.")

@@ -1,3 +1,9 @@
+/*
+ * auth.ts
+ * Authentication API module — wraps login, register, token refresh, and /me endpoints
+ * using the shared API client.
+ */
+
 import { api } from "./client"
 import type { SuccessResponse, User, TokenResponse, LoginRequest, RegisterRequest } from "@/types"
 

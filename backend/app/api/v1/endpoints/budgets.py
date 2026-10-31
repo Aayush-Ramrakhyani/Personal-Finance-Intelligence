@@ -1,3 +1,7 @@
+"""
+budgets.py
+Budget CRUD endpoints; responses include real-time spending progress calculated by BudgetService.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

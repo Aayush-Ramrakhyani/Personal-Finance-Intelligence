@@ -1,3 +1,8 @@
+"""
+budget_service.py
+Budget CRUD and real-time progress computation: resolves period date ranges, sums
+actual spending via SQL, calculates percentage used, and fires alert-threshold levels.
+"""
 from calendar import monthrange
 from datetime import date
 from decimal import Decimal
@@ -121,7 +126,7 @@ class BudgetService:
             pct = Decimal("0.00")
 
         alert_level = None
-        for threshold in sorted(budget.alert_thresholds or [], reverse=True):
+        for threshold in sorted(budget.alert_thresholds or [], reverse=True):  # highest threshold wins
             if pct >= threshold:
                 alert_level = threshold
                 break

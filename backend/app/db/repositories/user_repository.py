@@ -1,3 +1,7 @@
+"""
+user_repository.py
+Data-access for User; get_by_email normalises to lowercase so login lookups are case-insensitive.
+"""
 from typing import Optional
 from uuid import UUID
 

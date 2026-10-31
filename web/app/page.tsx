@@ -1,3 +1,9 @@
+/*
+ * page.tsx
+ * Public landing page — hero section, feature grid, and tech-stack strip that
+ * greets unauthenticated visitors and links them to register or sign in.
+ */
+
 "use client"
 
 import Link from "next/link"

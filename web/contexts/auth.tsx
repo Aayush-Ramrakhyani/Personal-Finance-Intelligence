@@ -1,3 +1,9 @@
+/*
+ * auth.tsx
+ * React AuthContext and AuthProvider — persists JWT tokens in localStorage, exposes
+ * login/register/logout actions and a refreshUser helper consumed by the whole app.
+ */
+
 "use client"
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react"
@@ -15,7 +21,7 @@ interface AuthState {
   refreshUser: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthState | null>(null)
+const AuthContext = createContext<AuthState | null>(null) // null default forces consumers to be inside AuthProvider
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser]       = useState<User | null>(null)
@@ -33,11 +39,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const token = typeof window !== "undefined"
-      ? localStorage.getItem("pfi_access_token")
+      ? localStorage.getItem("pfi_access_token") // SSR guard — localStorage not available on the server
       : null
 
     if (token) {
-      refreshUser().finally(() => setIsLoading(false))
+      refreshUser().finally(() => setIsLoading(false)) // validate stored token with /auth/me on mount
     } else {
       setIsLoading(false)
     }
@@ -45,18 +51,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (data: LoginRequest) => {
     const res = await authApi.login(data)
-    setTokens(res.data.access_token, res.data.refresh_token)
+    setTokens(res.data.access_token, res.data.refresh_token) // persist tokens to localStorage
     setUser(res.data.user)
   }
 
   const register = async (data: RegisterRequest) => {
     const res = await authApi.register(data)
-    setTokens(res.data.access_token, res.data.refresh_token)
+    setTokens(res.data.access_token, res.data.refresh_token) // immediately sign in after registration
     setUser(res.data.user)
   }
 
   const logout = () => {
-    clearTokens()
+    clearTokens() // remove tokens from localStorage before navigating away
     setUser(null)
     window.location.href = "/login"
   }
@@ -66,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         isLoading,
-        isAuthenticated: !!user,
+        isAuthenticated: !!user, // derived boolean so consumers don't have to null-check user themselves
         login,
         register,
         logout,

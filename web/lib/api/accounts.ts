@@ -1,3 +1,9 @@
+/*
+ * accounts.ts
+ * Accounts API module — CRUD operations for bank/wallet accounts linked to the
+ * authenticated user, used in the import wizard account selector.
+ */
+
 import { api } from "./client"
 import type { SuccessResponse, Account } from "@/types"
 

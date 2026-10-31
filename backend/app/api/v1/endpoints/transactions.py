@@ -1,3 +1,7 @@
+"""
+transactions.py
+Transaction CRUD and transfer endpoints; list supports server-side pagination, filtering, and sorting.
+"""
 import math
 from datetime import date
 from decimal import Decimal

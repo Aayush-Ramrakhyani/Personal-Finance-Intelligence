@@ -1,3 +1,7 @@
+"""
+notification_repository.py
+Data-access for notifications; supports filtering by unread status and bulk mark-read operations with a single UPDATE statement.
+"""
 from typing import Optional
 from uuid import UUID
 from datetime import datetime, timezone

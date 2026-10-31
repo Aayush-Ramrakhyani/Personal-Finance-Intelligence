@@ -1,3 +1,7 @@
+"""
+prompts.py
+All LLM system prompt strings for the application: financial assistant, transaction categorization, intent parsing, insight generation, and monthly summary.
+"""
 FINANCIAL_ASSISTANT_SYSTEM = """You are a helpful personal finance assistant for an Indian user.
 
 IMPORTANT RULES:

@@ -1,3 +1,7 @@
+"""
+transaction_repository.py
+Data-access for transactions: supports dynamic filter building, paginated listing, category totals (JOIN with Category), monthly aggregates, and duplicate detection.
+"""
 from datetime import date
 from decimal import Decimal
 from typing import Optional
@@ -204,7 +208,7 @@ class TransactionRepository(BaseRepository[Transaction]):
         description: Optional[str] = None,
     ) -> Optional[dict]:
         """Check if a transaction likely exists already. Returns confidence dict."""
-        # Exact external reference match
+        # Highest-confidence check: matching external reference (e.g. bank transaction ID)
         if external_ref:
             result = await self.db.execute(
                 sa.select(Transaction.id).where(

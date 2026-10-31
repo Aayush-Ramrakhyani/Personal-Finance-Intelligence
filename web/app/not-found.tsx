@@ -1,3 +1,9 @@
+/*
+ * not-found.tsx
+ * Custom 404 page rendered by Next.js when a route cannot be matched;
+ * animates in a staggered layout with Home and Go-back navigation buttons.
+ */
+
 "use client"
 
 import Link from "next/link"

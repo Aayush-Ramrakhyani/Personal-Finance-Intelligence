@@ -1,10 +1,15 @@
+"""
+import_tasks.py
+Celery background task for processing large CSV imports asynchronously, with retry
+logic (up to 3 attempts, 60-second backoff) so transient DB errors don't lose jobs.
+"""
 from app.tasks.celery_app import celery_app
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
 
 
-@celery_app.task(name="process_import", bind=True, max_retries=3)
+@celery_app.task(name="process_import", bind=True, max_retries=3)  # bind=True exposes `self` for retry; max_retries caps at 3
 def process_import(self, job_id: str, user_id: str):
     """Background task to process a large CSV import."""
     import asyncio
@@ -20,4 +25,4 @@ def process_import(self, job_id: str, user_id: str):
         asyncio.run(_run())
     except Exception as exc:
         logger.error("import_task_failed", job_id=job_id, error=str(exc))
-        raise self.retry(exc=exc, countdown=60)
+        raise self.retry(exc=exc, countdown=60)  # re-enqueue after 60 s to allow transient errors to clear

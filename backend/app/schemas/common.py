@@ -1,3 +1,8 @@
+"""
+common.py
+Generic Pydantic envelope schemas used across all API responses: SuccessResponse for
+single objects, PaginatedResponse for lists, and MessageResponse for confirmations.
+"""
 from typing import Generic, Optional, TypeVar
 from pydantic import BaseModel
 

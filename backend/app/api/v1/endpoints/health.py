@@ -1,3 +1,7 @@
+"""
+health.py
+Health-check endpoints: basic liveness, database connectivity, and Redis connectivity probes.
+"""
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 

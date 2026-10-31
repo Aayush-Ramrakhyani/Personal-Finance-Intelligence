@@ -1,3 +1,8 @@
+"""
+notification.py
+ORM model for in-app notifications such as budget warnings, unusual spending alerts,
+recurring transaction detections, and import completion events.
+"""
 import uuid
 from datetime import datetime, timezone
 from typing import Optional

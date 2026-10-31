@@ -1,3 +1,9 @@
+/*
+ * globals.css
+ * Global CSS for the Personal Finance Intelligence web app: design tokens (colours,
+ * typography, radii), base resets, scrollbar styling, utility classes, and Recharts overrides.
+ */
+
 @import "tailwindcss";
 
 /* ─── Design Tokens ───────────────────────────────────────────────────────── */

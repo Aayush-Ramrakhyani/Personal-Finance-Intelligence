@@ -1,3 +1,7 @@
+"""
+category_repository.py
+Data-access for categories; list_for_user returns both system categories (user_id IS NULL) and user-created categories via a single OR query.
+"""
 from typing import Optional
 from uuid import UUID
 

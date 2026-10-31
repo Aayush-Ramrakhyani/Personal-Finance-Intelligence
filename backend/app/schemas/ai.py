@@ -1,3 +1,8 @@
+"""
+ai.py
+Pydantic schemas for AI conversation messages, insight responses, and insight
+generation requests used by the financial assistant and insight endpoints.
+"""
 import uuid
 from datetime import datetime
 from decimal import Decimal

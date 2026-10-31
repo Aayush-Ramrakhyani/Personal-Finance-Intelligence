@@ -1,3 +1,9 @@
+/*
+ * transactions.ts
+ * Transactions API module — paginated list with rich filter/sort params, plus
+ * get, create, update, and delete operations for individual transactions.
+ */
+
 import { api } from "./client"
 import type {
   SuccessResponse, PaginatedResponse,

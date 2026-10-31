@@ -1,3 +1,7 @@
+"""
+base.py
+Generic BaseRepository[ModelType] providing standard CRUD operations (get, get_by_user, create, update, delete, list_by_user) for all SQLAlchemy models.
+"""
 from typing import Any, Generic, Optional, Type, TypeVar
 from uuid import UUID
 

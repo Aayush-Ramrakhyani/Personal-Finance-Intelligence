@@ -1,3 +1,7 @@
+"""
+categories.py
+Category CRUD endpoints; list returns both system-wide and user-owned categories merged.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

@@ -1,3 +1,9 @@
+/*
+ * card.tsx
+ * Surface card component with optional hover lift animation and coloured glow variants;
+ * exports CardHeader, CardTitle, and CardContent for consistent inner layout.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -21,7 +27,7 @@ export function Card({ children, className, hover = false, glow = "none", onClic
 
   return (
     <motion.div
-      whileHover={hover ? { y: -2, transition: { type: "spring", stiffness: 400, damping: 30 } } : {}}
+      whileHover={hover ? { y: -2, transition: { type: "spring", stiffness: 400, damping: 30 } } : {}} // spring lift only when hover prop is true
       onClick={onClick}
       className={cn(
         "rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]",

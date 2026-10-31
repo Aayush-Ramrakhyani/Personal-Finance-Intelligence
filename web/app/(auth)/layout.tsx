@@ -1,3 +1,9 @@
+/*
+ * (auth)/layout.tsx
+ * Authentication layout wrapping login and register pages — redirects already-
+ * authenticated users to /dashboard, and renders a branding panel on large screens.
+ */
+
 "use client"
 
 import { useEffect } from "react"
@@ -10,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) router.replace("/dashboard")
+    if (!isLoading && isAuthenticated) router.replace("/dashboard") // skip auth pages for logged-in users
   }, [isAuthenticated, isLoading, router])
 
   if (isLoading) return (

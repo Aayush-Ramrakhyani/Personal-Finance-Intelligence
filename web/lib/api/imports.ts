@@ -1,3 +1,9 @@
+/*
+ * imports.ts
+ * CSV import API module — uploads a file as multipart FormData, triggers column detection,
+ * previews staged transactions, and confirms the final import with exclusion IDs.
+ */
+
 import { apiRequest } from "./client"
 import type {
   SuccessResponse, ImportJob, DetectedColumns, ColumnMapping, ImportPreview,

@@ -1,3 +1,8 @@
+"""
+auth.py
+Pydantic schemas for authentication flows: registration with password-strength
+validation, login, JWT token responses, and the authenticated user profile.
+"""
 import uuid
 from datetime import datetime
 from typing import Optional
@@ -22,7 +27,7 @@ class RegisterRequest(BaseModel):
             raise ValueError("Password must contain at least one uppercase letter.")
         if not any(c.isdigit() for c in v):
             raise ValueError("Password must contain at least one digit.")
-        return v
+        return v  # plaintext only here — hashing happens in AuthService.register
 
     @field_validator("first_name", "last_name")
     @classmethod

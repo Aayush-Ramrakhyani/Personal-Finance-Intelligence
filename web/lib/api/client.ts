@@ -1,3 +1,9 @@
+/*
+ * client.ts
+ * Core API client — manages JWT token storage in localStorage, handles transparent
+ * token refresh with a request queue, and exposes typed get/post/patch/delete helpers.
+ */
+
 "use client"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1"
@@ -25,14 +31,14 @@ export function clearTokens(): void {
 
 /* ─── Refresh logic ───────────────────────────────────────────────────────── */
 let isRefreshing = false
-let refreshQueue: Array<(token: string | null) => void> = []
+let refreshQueue: Array<(token: string | null) => void> = [] // pending requests waiting for a new token
 
 async function refreshAccessToken(): Promise<string | null> {
   const refresh = getRefreshToken()
   if (!refresh) { clearTokens(); return null }
 
   if (isRefreshing) {
-    return new Promise((resolve) => { refreshQueue.push(resolve) })
+    return new Promise((resolve) => { refreshQueue.push(resolve) }) // coalesce concurrent refresh attempts into one request
   }
 
   isRefreshing = true
@@ -95,9 +101,9 @@ export async function apiRequest<T>(
   let response = await fetch(url, { ...rest, headers })
 
   if (response.status === 401 && retry) {
-    const newToken = await refreshAccessToken()
+    const newToken = await refreshAccessToken() // silently refresh and replay the failed request once
     if (!newToken) {
-      if (typeof window !== "undefined") window.location.href = "/login"
+      if (typeof window !== "undefined") window.location.href = "/login" // force re-login when refresh also fails
       throw new ApiRequestError("Session expired", 401)
     }
     headers["Authorization"] = `Bearer ${newToken}`

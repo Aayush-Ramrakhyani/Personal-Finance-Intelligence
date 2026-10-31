@@ -1,3 +1,9 @@
+/*
+ * ai.ts
+ * AI API module — manages chat conversations, sends user messages to the backend
+ * (which proxies GPT-4/Gemini), and fetches or triggers AI spending insights.
+ */
+
 import { api } from "./client"
 import type {
   SuccessResponse, AIConversation, AIMessage, AIInsight,

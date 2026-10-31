@@ -1,3 +1,7 @@
+"""
+ai.py
+AI chat and insights endpoints: stores conversation turns in the DB, calls FinancialAssistant for AI responses, and triggers insight generation on demand.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
@@ -21,6 +25,7 @@ router = APIRouter(prefix="/ai", tags=["ai"])
 
 
 def _get_ai_provider():
+    # Returns None (instead of raising) so endpoints can degrade gracefully without a key
     try:
         from app.ai.factory import get_ai_provider
         return get_ai_provider()
@@ -112,7 +117,7 @@ async def send_message(
     # Store assistant message
     assistant_msg = await repo.add_message(conversation_id, "assistant", ai_response)
 
-    # Auto-set title from first message
+    # Auto-set conversation title from the user's first message (truncated to 100 chars)
     if conversation.message_count <= 2 and not conversation.title:
         import sqlalchemy as sa
         from app.models.ai_conversation import AIConversation

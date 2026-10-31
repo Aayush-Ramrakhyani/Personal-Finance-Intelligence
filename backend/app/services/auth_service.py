@@ -1,3 +1,8 @@
+"""
+auth_service.py
+Handles user registration, login, and JWT token lifecycle (issue, refresh);
+delegates password hashing and token signing to the core security module.
+"""
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,7 +29,7 @@ class AuthService:
         if existing:
             raise DuplicateError("Email")
 
-        password_hash = hash_password(request.password)
+        password_hash = hash_password(request.password)  # bcrypt hash; plaintext never persisted
         user = await self.user_repo.create_user(
             email=request.email,
             password_hash=password_hash,
@@ -39,7 +44,7 @@ class AuthService:
 
     async def login(self, request: LoginRequest) -> tuple[UserResponse, TokenResponse]:
         user = await self.user_repo.get_by_email(request.email)
-        if not user or not verify_password(request.password, user.password_hash):
+        if not user or not verify_password(request.password, user.password_hash):  # timing-safe comparison via bcrypt
             raise AuthenticationError("Invalid email or password.")
         if not user.is_active:
             raise AuthenticationError("Account is deactivated.")
@@ -62,10 +67,10 @@ class AuthService:
         return UserResponse.model_validate(user)
 
     def _create_tokens(self, user_id: UUID) -> TokenResponse:
-        access_token = create_access_token({"sub": str(user_id)})
-        refresh_token = create_refresh_token({"sub": str(user_id)})
+        access_token = create_access_token({"sub": str(user_id)})  # short-lived JWT for API auth
+        refresh_token = create_refresh_token({"sub": str(user_id)})  # longer-lived token for silent renewal
         return TokenResponse(
             access_token=access_token,
             refresh_token=refresh_token,
-            expires_in=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            expires_in=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # convert minutes → seconds for client
         )

@@ -1,3 +1,7 @@
+"""
+config.py
+Application settings loaded from environment variables and .env file via pydantic-settings; sensitive defaults use secrets.token_urlsafe for JWT keys.
+"""
 import secrets
 from typing import List, Optional
 from pydantic_settings import BaseSettings
@@ -18,7 +22,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
 
     # JWT
-    JWT_SECRET: str = secrets.token_urlsafe(32)
+    JWT_SECRET: str = secrets.token_urlsafe(32)  # Random default — must be overridden in production via .env
     JWT_REFRESH_SECRET: str = secrets.token_urlsafe(32)
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
@@ -31,7 +35,7 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = None
     GEMINI_MODEL: str = "gemini-1.5-flash"
 
-    # Categorization thresholds
+    # Confidence floor for auto-applying an AI category (below this, it becomes a suggestion only)
     AUTO_CATEGORIZE_THRESHOLD: float = 0.90
     SUGGEST_CATEGORY_THRESHOLD: float = 0.70
 

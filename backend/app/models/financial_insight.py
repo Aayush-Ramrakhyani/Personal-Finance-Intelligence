@@ -1,3 +1,8 @@
+"""
+financial_insight.py
+ORM model for AI-generated and rule-based financial insights stored per user,
+including anomaly alerts, monthly summaries, and budget observations.
+"""
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal

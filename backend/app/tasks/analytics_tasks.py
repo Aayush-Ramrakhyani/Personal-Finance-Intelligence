@@ -1,10 +1,15 @@
+"""
+analytics_tasks.py
+Celery background tasks for scheduled analytics: periodic recurring-transaction
+detection across all users and monthly AI insight generation per user.
+"""
 from app.tasks.celery_app import celery_app
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
 
 
-@celery_app.task(name="detect_recurring_all_users")
+@celery_app.task(name="detect_recurring_all_users")  # Celery task name used in beat schedule config
 def detect_recurring_all_users():
     """Periodic task: detect recurring transactions for all active users."""
     import asyncio
@@ -31,7 +36,7 @@ def detect_recurring_all_users():
     asyncio.run(_run())
 
 
-@celery_app.task(name="generate_monthly_insights")
+@celery_app.task(name="generate_monthly_insights")  # called by beat scheduler on the 1st of each month
 def generate_monthly_insights(month: int, year: int):
     """Generate insights for all users for a given month."""
     import asyncio
@@ -49,9 +54,9 @@ def generate_monthly_insights(month: int, year: int):
             )
             user_ids = result.scalars().all()
             try:
-                provider = get_ai_provider()
+                provider = get_ai_provider()  # returns configured AI provider or raises if no API key set
             except Exception:
-                provider = None
+                provider = None  # graceful fallback: rule-based insights still generated without AI
 
             for uid in user_ids:
                 try:

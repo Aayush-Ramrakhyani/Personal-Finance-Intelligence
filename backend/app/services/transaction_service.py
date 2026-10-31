@@ -1,3 +1,8 @@
+"""
+transaction_service.py
+Orchestrates transaction lifecycle: creation, transfers (paired debit/credit), updates
+with balance reversal, and soft-delete — keeping account balances always in sync.
+"""
 from decimal import Decimal
 from typing import Optional
 from uuid import UUID
@@ -133,10 +138,8 @@ class TransactionService:
         new_amount = data.amount if data.amount is not None else old_amount
 
         if new_amount != old_amount and txn.type in ("income", "expense"):
-            # Reverse old
-            await self._apply_balance_delta(txn.account_id, old_amount, txn.type, reverse=True)
-            # Apply new
-            await self._apply_balance_delta(txn.account_id, new_amount, txn.type, reverse=False)
+            await self._apply_balance_delta(txn.account_id, old_amount, txn.type, reverse=True)  # undo old amount impact
+            await self._apply_balance_delta(txn.account_id, new_amount, txn.type, reverse=False)  # apply updated amount
 
         updates = data.model_dump(exclude_none=True)
         updated = await self.txn_repo.update(txn, updates)

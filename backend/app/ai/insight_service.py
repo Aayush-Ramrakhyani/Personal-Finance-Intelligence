@@ -1,4 +1,8 @@
-"""Generate financial insights from verified backend calculations."""
+"""
+insight_service.py
+Generates monthly financial insights by feeding verified SQL metrics into the LLM for
+narrative summaries, then always appends deterministic rule-based anomaly insights.
+"""
 import calendar
 from datetime import date
 from decimal import Decimal
@@ -41,7 +45,7 @@ class InsightService:
         anomalies = await self.analytics.get_anomalies(user_id)
         cash_flow = await self.analytics.get_cash_flow(user_id, 2)
 
-        # Build verified context for AI
+        # Build verified context for AI — all figures computed by analytics service, not the LLM
         context = {
             "month": f"{MONTH_NAMES[month]} {year}",
             "total_income": str(overview.total_income),
@@ -71,10 +75,10 @@ class InsightService:
                 messages = [
                     AIProviderMessage(
                         role="user",
-                        content=f"Generate financial insights for this data:\n{json.dumps(context, indent=2)}",
+                        content=f"Generate financial insights for this data:\n{json.dumps(context, indent=2)}",  # verified data embedded in prompt
                     )
                 ]
-                raw = await self.ai.complete_structured(
+                raw = await self.ai.complete_structured(  # LLM call: produce structured monthly narrative from verified metrics
                     messages, MonthlySummaryOutput, MONTHLY_SUMMARY_SYSTEM
                 )
                 summary = MonthlySummaryOutput(**raw)

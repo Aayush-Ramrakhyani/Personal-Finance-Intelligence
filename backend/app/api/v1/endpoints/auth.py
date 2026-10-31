@@ -1,3 +1,7 @@
+"""
+auth.py
+Authentication endpoints: register, login (returns access + refresh tokens), token refresh, and get-current-user.
+"""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

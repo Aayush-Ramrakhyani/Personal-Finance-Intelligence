@@ -1,3 +1,9 @@
+/*
+ * (auth)/login/page.tsx
+ * Login form — collects email and password, calls AuthContext.login which stores
+ * JWT tokens, and redirects to /dashboard on success.
+ */
+
 "use client"
 
 import { useState } from "react"

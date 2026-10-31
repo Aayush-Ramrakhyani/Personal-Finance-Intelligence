@@ -1,3 +1,7 @@
+"""
+main.py
+FastAPI application entrypoint: registers middleware, exception handlers, routers, and runs a DB connectivity check on startup.
+"""
 from contextlib import asynccontextmanager
 
 import sqlalchemy as sa
@@ -16,6 +20,7 @@ from app.core.exceptions import (
 from app.core.logging import get_logger, setup_logging
 from app.db.base import engine
 
+# Initialize structured logging before anything else
 setup_logging()
 logger = get_logger(__name__)
 
@@ -49,7 +54,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS
+# Allow cross-origin requests from configured frontend origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -58,12 +63,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Exception handlers
+# Register custom handlers so all errors return consistent JSON envelopes
 app.add_exception_handler(FinanceException, finance_exception_handler)
 app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(Exception, general_exception_handler)
 
-# API routes
+# Mount all versioned API routes under /api/v1
 app.include_router(api_router, prefix="/api/v1")
 
 

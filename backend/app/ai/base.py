@@ -1,3 +1,7 @@
+"""
+base.py
+Abstract base classes for AI providers: defines the AIProvider interface and AIProviderMessage schema used by all LLM implementations.
+"""
 from abc import ABC, abstractmethod
 from typing import Type
 
@@ -26,6 +30,7 @@ class AIProvider(ABC):
         output_schema: Type[BaseModel],
         system_prompt: str = "",
     ) -> dict:
+        # Returns a plain dict that callers validate against output_schema
         pass
 
     @property

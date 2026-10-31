@@ -1,3 +1,8 @@
+"""
+notification.py
+Pydantic schemas for notification listing and bulk mark-as-read requests,
+surfacing type, read state, and optional metadata for frontend badge counts.
+"""
 import uuid
 from datetime import datetime
 from typing import Optional

@@ -1,3 +1,7 @@
+"""
+security.py
+Password hashing (Argon2), JWT creation/decoding, and the get_current_user_id FastAPI dependency that extracts a verified user UUID from a Bearer token.
+"""
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 from uuid import UUID
@@ -10,7 +14,7 @@ from jose import JWTError, jwt
 
 from app.core.config import settings
 
-ph = PasswordHasher(time_cost=2, memory_cost=65536, parallelism=2)
+ph = PasswordHasher(time_cost=2, memory_cost=65536, parallelism=2)  # 64 MB RAM cost, OWASP-recommended Argon2id profile
 bearer_scheme = HTTPBearer()
 
 
@@ -31,7 +35,7 @@ def create_access_token(data: dict) -> str:
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES
     )
-    to_encode.update({"exp": expire, "type": "access"})
+    to_encode.update({"exp": expire, "type": "access"})  # "type" claim distinguishes access from refresh tokens
     return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 

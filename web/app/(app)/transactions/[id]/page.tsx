@@ -1,3 +1,9 @@
+/*
+ * (app)/transactions/[id]/page.tsx
+ * Transaction detail page — shows amount hero, metadata grid, notes, and provides
+ * inline edit (category, merchant, notes) and permanent delete via modal dialogs.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"

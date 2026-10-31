@@ -1,3 +1,7 @@
+"""
+factory.py
+Singleton factory for the configured AI provider: lazily initialises either the OpenAI or Gemini implementation based on settings.AI_PROVIDER.
+"""
 from functools import lru_cache
 
 from app.ai.base import AIProvider
@@ -7,6 +11,7 @@ from app.core.logging import get_logger
 
 logger = get_logger(__name__)
 
+# Module-level singleton — avoids re-creating the provider (and its HTTP client) per request
 _provider_instance: AIProvider | None = None
 
 
@@ -15,6 +20,7 @@ def get_ai_provider() -> AIProvider:
     if _provider_instance is not None:
         return _provider_instance
 
+    # Determine which provider to instantiate from settings
     provider_name = settings.AI_PROVIDER.lower()
 
     if provider_name == "openai":

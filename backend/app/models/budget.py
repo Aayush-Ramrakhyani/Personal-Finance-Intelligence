@@ -1,3 +1,7 @@
+"""
+budget.py
+ORM model for budget limits per category; alert_thresholds is a JSON list of percentage integers (e.g. [75, 90, 100]).
+"""
 import uuid
 from datetime import date, datetime, timezone
 from decimal import Decimal

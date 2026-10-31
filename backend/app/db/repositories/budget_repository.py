@@ -1,3 +1,7 @@
+"""
+budget_repository.py
+Data-access for budgets; list_active eagerly loads category to avoid N+1 queries when calculating progress.
+"""
 from typing import Optional
 from uuid import UUID
 

@@ -1,3 +1,8 @@
+"""
+test_analytics.py
+Unit/integration tests for AnalyticsService: empty-state defaults, savings-rate
+formula correctness, and the critical invariant that transfers never inflate totals.
+"""
 from datetime import date
 from decimal import Decimal
 

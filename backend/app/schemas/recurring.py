@@ -1,3 +1,8 @@
+"""
+recurring.py
+Pydantic schemas for recurring transaction detection results, exposing confidence
+scores, frequency, next-occurrence prediction, and aggregated monthly/annual cost.
+"""
 import uuid
 from datetime import date, datetime
 from decimal import Decimal

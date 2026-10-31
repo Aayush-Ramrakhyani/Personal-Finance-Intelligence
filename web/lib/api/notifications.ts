@@ -1,3 +1,9 @@
+/*
+ * notifications.ts
+ * Notifications API module — lists user notifications, fetches the unread count
+ * for the topbar badge, and marks individual or all notifications as read.
+ */
+
 import { api } from "./client"
 import type { SuccessResponse, Notification } from "@/types"
 

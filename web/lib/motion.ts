@@ -1,3 +1,9 @@
+/*
+ * motion.ts
+ * Central Framer Motion configuration — spring presets, easing curves, and reusable
+ * Variants for pages, stagger lists, cards, dialogs, drawers, and progress bars.
+ */
+
 import type { Variants, Transition } from "framer-motion"
 
 /* ─── Durations ───────────────────────────────────────────────────────────── */

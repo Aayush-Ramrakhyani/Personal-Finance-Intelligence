@@ -1,3 +1,8 @@
+"""
+test_transactions.py
+Integration tests for the transactions API: CRUD operations, balance side-effects,
+input validation, user data isolation, and soft-delete behaviour.
+"""
 from datetime import date
 from decimal import Decimal
 

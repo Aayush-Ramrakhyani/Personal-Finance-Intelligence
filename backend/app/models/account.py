@@ -1,3 +1,7 @@
+"""
+account.py
+SQLAlchemy ORM model for user accounts (bank, cash, credit card, etc.) with a CheckConstraint on account_type.
+"""
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal

@@ -1,3 +1,9 @@
+/*
+ * (app)/budgets/page.tsx
+ * Budget management page — lists per-category monthly budgets with animated
+ * circular/bar progress, and provides create/delete dialogs backed by the budgets API.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -69,9 +75,9 @@ export default function BudgetsPage() {
     </div>
   )
 
-  const totalBudgeted = budgets.reduce((s, b) => s + parseFloat(b.amount), 0)
+  const totalBudgeted = budgets.reduce((s, b) => s + parseFloat(b.amount), 0) // sum across all active budgets
   const totalSpent    = budgets.reduce((s, b) => s + parseFloat(b.spent), 0)
-  const overBudget    = budgets.filter(b => b.is_over_budget).length
+  const overBudget    = budgets.filter(b => b.is_over_budget).length // count budgets already blown
 
   return (
     <PageTransition>

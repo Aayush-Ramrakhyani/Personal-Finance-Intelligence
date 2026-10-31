@@ -1,3 +1,7 @@
+"""
+base.py
+SQLAlchemy async engine, session factory, and get_db dependency; the session auto-commits on success and rolls back on any exception.
+"""
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine

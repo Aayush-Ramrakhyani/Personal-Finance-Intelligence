@@ -1,3 +1,9 @@
+/*
+ * (app)/analytics/page.tsx
+ * Analytics dashboard displaying income/expense trends, category pie breakdown,
+ * net cash-flow line chart, and AI-detected spending anomalies over a selectable period.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -36,7 +42,7 @@ export default function AnalyticsPage() {
   useEffect(() => {
     setLoading(true)
     Promise.all([
-      analyticsApi.trends(parseInt(months)),
+      analyticsApi.trends(parseInt(months)), // re-fetch whenever the month range selector changes
       analyticsApi.categories(undefined, undefined, "expense"),
       analyticsApi.categories(undefined, undefined, "income"),
       analyticsApi.anomalies(),

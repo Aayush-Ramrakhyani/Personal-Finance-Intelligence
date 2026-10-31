@@ -1,3 +1,8 @@
+"""
+transaction.py
+Core ORM model for financial transactions (income, expense, transfer), tracking
+amount, category, payment method, source, and soft-deletion state.
+"""
 import uuid
 from datetime import date, datetime, timezone
 from decimal import Decimal
@@ -83,8 +88,8 @@ class Transaction(Base):
             "type IN ('income','expense','transfer')", name="ck_transaction_type"
         ),
         sa.CheckConstraint("amount > 0", name="ck_transaction_amount_positive"),
-        sa.Index("ix_transactions_user_date", "user_id", "transaction_date"),
-        sa.Index("ix_transactions_user_type", "user_id", "type"),
+        sa.Index("ix_transactions_user_date", "user_id", "transaction_date"),  # primary query pattern for analytics date ranges
+        sa.Index("ix_transactions_user_type", "user_id", "type"),  # speeds up income/expense aggregation queries
     )
 
     # Relationships

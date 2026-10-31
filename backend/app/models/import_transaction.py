@@ -1,3 +1,8 @@
+"""
+import_transaction.py
+ORM model for staged (pre-confirmation) transactions parsed from a CSV import job,
+holding duplicate-detection scores and AI-suggested categories before committing.
+"""
 import uuid
 from datetime import date, datetime, timezone
 from decimal import Decimal
@@ -50,15 +55,15 @@ class ImportTransaction(Base):
     # Duplicate detection
     is_duplicate: Mapped[bool] = mapped_column(sa.Boolean, nullable=False, default=False)
     duplicate_confidence: Mapped[Decimal] = mapped_column(
-        sa.Numeric(4, 3), nullable=False, default=Decimal("0.0")
+        sa.Numeric(4, 3), nullable=False, default=Decimal("0.0")  # 0.0–1.0 similarity score against existing transactions
     )
     duplicate_of_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        sa.UUID(as_uuid=True), nullable=True
+        sa.UUID(as_uuid=True), nullable=True  # FK not enforced — referenced transaction may be from any account
     )
     # Categorization
-    category_source: Mapped[Optional[str]] = mapped_column(sa.String(50), nullable=True)
+    category_source: Mapped[Optional[str]] = mapped_column(sa.String(50), nullable=True)  # rule_based | ai | manual
     category_confidence: Mapped[Optional[Decimal]] = mapped_column(
-        sa.Numeric(4, 3), nullable=True
+        sa.Numeric(4, 3), nullable=True  # 0.0–1.0 confidence from categorization engine
     )
     # Status: pending, included, excluded
     status: Mapped[str] = mapped_column(sa.String(20), nullable=False, default="pending")

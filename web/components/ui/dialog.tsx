@@ -1,3 +1,9 @@
+/*
+ * dialog.tsx
+ * Accessible modal dialog with animated backdrop (overlayVariants) and panel
+ * (dialogVariants), Escape-key dismissal, and body scroll-lock while open.
+ */
+
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
@@ -26,13 +32,13 @@ const sizeClass = {
 export function Dialog({ open, onClose, title, description, children, className, size = "md" }: DialogProps) {
   useEffect(() => {
     if (!open) return
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() } // close on Escape key
     document.addEventListener("keydown", handler)
     return () => document.removeEventListener("keydown", handler)
   }, [open, onClose])
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : ""
+    document.body.style.overflow = open ? "hidden" : "" // prevent background scroll while dialog is open
     return () => { document.body.style.overflow = "" }
   }, [open])
 

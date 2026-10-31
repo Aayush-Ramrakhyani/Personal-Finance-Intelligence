@@ -1,3 +1,9 @@
+/*
+ * animated-number.tsx
+ * Smoothly animates a numeric value from its previous figure to a new target using
+ * a requestAnimationFrame loop with easeOutQuart easing; starts only when in viewport.
+ */
+
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -27,7 +33,7 @@ export function AnimatedNumber({
 }: AnimatedNumberProps) {
   const [display, setDisplay] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-20px" })
+  const inView = useInView(ref, { once: true, margin: "-20px" }) // trigger animation once element enters viewport
   const startTime = useRef<number | null>(null)
   const startValue = useRef(0)
   const raf = useRef<number | null>(null)
@@ -48,9 +54,9 @@ export function AnimatedNumber({
       setDisplay(current)
 
       if (progress < 1) {
-        raf.current = requestAnimationFrame(step)
+        raf.current = requestAnimationFrame(step) // continue animating until progress reaches 1
       } else {
-        startValue.current = to
+        startValue.current = to // store final value so next animation starts from here
       }
     }
 

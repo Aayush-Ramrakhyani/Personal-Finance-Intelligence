@@ -1,3 +1,9 @@
+/*
+ * page-transition.tsx
+ * Thin wrapper that applies the shared pageVariants (fade + slide-up) to any page
+ * component, ensuring consistent enter/exit transitions across the app.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"

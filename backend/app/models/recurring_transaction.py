@@ -1,3 +1,8 @@
+"""
+recurring_transaction.py
+ORM model for automatically detected or user-confirmed recurring expenses, storing
+frequency, confidence score, and the predicted next occurrence date.
+"""
 import uuid
 from datetime import date, datetime, timezone
 from decimal import Decimal

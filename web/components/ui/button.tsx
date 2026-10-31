@@ -1,3 +1,9 @@
+/*
+ * button.tsx
+ * Animated button component with multiple visual variants, size scales,
+ * left/right icon slots, and an integrated loading spinner via Framer Motion tap/hover.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -43,8 +49,8 @@ export function Button({
 }: ButtonProps) {
   return (
     <motion.button
-      whileTap={{ scale: 0.97 }}
-      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.97 }} // subtle press feedback
+      whileHover={{ scale: 1.01 }} // gentle lift on hover
       transition={{ type: "spring", stiffness: 500, damping: 35 }}
       className={cn(
         "inline-flex items-center justify-center font-medium",

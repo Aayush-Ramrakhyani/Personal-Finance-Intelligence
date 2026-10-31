@@ -1,3 +1,9 @@
+/*
+ * skeleton.tsx
+ * Loading skeleton primitives (Skeleton, CardSkeleton, TransactionSkeleton, ChartSkeleton)
+ * using the CSS shimmer animation defined in globals.css.
+ */
+
 import { cn } from "@/lib/utils"
 
 interface SkeletonProps {
